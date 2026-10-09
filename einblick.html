@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einblick – Skizzeo</title>
+<meta name="description" content="Ein erster Blick in Skizzeo: ein Modell mit bearbeitbaren Ansichten, baulich mitdenkende Bauteile, Mengen, Kosten und Leistungsverzeichnis und die Bauteil-Werkbank.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="sk" d="M0 237.5 C0 96.5 103.9 0 259.6 0 L586 0 L586 434.7 L935 0 L1190 0 L840 427.5 L1219 909 L956.5 909 L587.3 452 C518.5 366.9 419 287 339 287 L0 287 Z M0 390.6 L0 909 L445.5 909 C532.1 909 602.2 836.9 602.2 748 C602.2 659.1 532.1 587 445.5 587 L281.5 587 C157.1 587 38.5 480.6 0 390.6 Z"/>
+    <symbol id="kote" viewBox="0 0 14 14"><path d="M1 3 H13 L7 12 Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Skizzeo Startseite">
+      <svg viewBox="0 0 1219 909" aria-hidden="true"><use href="#sk"/></svg>
+      Skizzeo
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <a href="einblick.html" aria-current="page">Einblick</a>
+      <a class="hide-sm" href="#kontakt">Kontakt</a>
+      <span class="soon">Coming soon</span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero small" aria-labelledby="titel">
+    <div class="hero-art" aria-hidden="true">
+      <svg class="giant" viewBox="0 0 1219 909"><use href="#sk"/></svg>
+    </div>
+    <div class="wrap">
+      <h1 id="titel">Einblick in Skizzeo.</h1>
+      <p class="lede">Ein erster Blick auf den aktuellen Entwicklungsstand. Die Bilder zeigen das Programm so, wie es heute läuft.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ansichten-titel">
+    <div class="wrap">
+      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Ansichten</p>
+      <div class="split">
+        <h2 id="ansichten-titel">Ein Modell. Jede Ansicht bearbeitbar.</h2>
+        <div class="prose">
+          <p>3D-Modell, Grundriss, Schnitt und Ansichten zeigen dieselben Bauteile. In jeder dieser Sichten arbeiten Sie mit denselben Werkzeugen. Eine Wand verschieben Sie im Schnitt genauso wie im 3D-Modell, und alle anderen Sichten folgen sofort.</p>
+          <p>Die Bauzeichnungen folgen der deutschen Norm: tragende Bauteile mit breiter Schnittkontur, normgerechte Schraffuren für Beton, Mauerwerk und Dämmung.</p>
+        </div>
+      </div>
+      <div class="views">
+        <figure>
+          <img src="assets/img/ansicht-3d.png" width="1280" height="800" alt="3D-Modell eines zweigeschossigen Hauses mit Werkzeugen, Geschossleiste, Ansichten und Projektbaum. Die Außenwände des Erdgeschosses sind orange hervorgehoben.">
+          <figcaption>3D-Modell mit Projektbaum. Ausgewählte Wände leuchten orange.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/ansicht-grundriss.png" width="1280" height="800" alt="Grundriss als Bauzeichnung mit schraffierten Außenwänden, einer Innenwand, der Schnittlinie A und dem Geschossbogen.">
+          <figcaption>Grundriss mit Schnittlinie und Geschossbogen zum Wechsel der Geschosse.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="bauwissen-titel">
+    <div class="wrap media-row">
+      <div>
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Bauwissen</p>
+        <h2 id="bauwissen-titel">Denkt wie ein Bauplaner.</h2>
+        <div class="prose" style="margin-top: 24px;">
+          <p>Jedes Bauteil ist so modelliert, wie es auf der Baustelle entsteht und abgerechnet wird. Springt das Obergeschoss zurück, entsteht auf der Decke von selbst eine <strong>Dachterrasse</strong> mit Dämmung, Belag, Attika und Attikablech. Springt es vor, verlängert sich die Decke und die Unterseite wird gedämmt.</p>
+        </div>
+        <ul class="ticks">
+          <li>Gründung mit Stahlbeton-Sohlplatte und umlaufender Frostschürze.</li>
+          <li>Geschosshöhe ziehen oder eintippen, und das ganze Haus passt sich an.</li>
+          <li>Wandaufbauten aus einem Bauteilkatalog, auch als Firmenkatalog für alle Projekte.</li>
+        </ul>
+      </div>
+      <figure class="pair">
+        <img src="assets/img/dachterrasse.png" width="900" height="760" alt="3D-Modell eines Hauses mit zurückspringendem Obergeschoss. Auf der Erdgeschossdecke ist eine Dachterrasse mit Attikablech entstanden.">
+        <img src="assets/img/ansicht-schnittdetail.png" width="745" height="760" alt="Ausschnitt aus einem Schnitt: mehrschalige Außenwand, Decke und Dachterrasse mit Attika, normgerecht schraffiert.">
+        <figcaption>Das Obergeschoss springt zurück, die Dachterrasse entsteht automatisch. Rechts derselbe Bereich im Schnitt.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="auswertung-titel">
+    <div class="wrap media-row flip">
+      <div>
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Auswertung</p>
+        <h2 id="auswertung-titel">Mengen, Kosten, Leistungs&shy;verzeichnis.</h2>
+        <div class="prose" style="margin-top: 24px;">
+          <p>Ein Klick öffnet die Auswertung mit drei Karten. Die <strong>Mengen</strong> stehen je Bauteil, Geschoss, Baustoff und Gewerk bereit. Die <strong>Kostenschätzung</strong> gliedert nach Gewerk, Geschoss oder Kostengruppe nach DIN 276. Das <strong>Leistungsverzeichnis</strong> entsteht je Los und Gewerk und lässt sich als PDF ausgeben, als Anfrage ohne Preise oder mit Preisen.</p>
+        </div>
+        <ul class="ticks">
+          <li>Kosten wahlweise nur für Material oder für Material und Lohn.</li>
+          <li>Eigene Firmenpreise und Bauleistungen hinterlegen.</li>
+          <li>Mengen so getrennt, wie sie abgerechnet werden, zum Beispiel Sohlplatte in m² und Frostschürze in m.</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="assets/img/mengen.png" width="820" height="500" alt="Auswertungsfenster mit den Karten Mengen, Kosten und AVA. Die Mengenermittlung ist nach Gewerk gegliedert und zeigt Frostschürze, Sohlplatte und Decken.">
+        <figcaption>Die Karte Mengen im Auswertungsfenster.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section night" aria-labelledby="werkbank-titel">
+    <div class="wrap">
+      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Bauteil-Werkbank</p>
+      <p class="status">In Entwicklung</p>
+      <div class="split">
+        <h2 id="werkbank-titel">Eigene Bauteile. Ohne Programmieren.</h2>
+        <div class="prose">
+          <p>Jede Firma baut ein wenig anders. Mit der Bauteil-Werkbank legen Sie eigene, firmenbezogene Bauteile an und erweitern so Ihre Bauteilbibliothek. Programmier- oder Skriptkenntnisse brauchen Sie dafür nicht.</p>
+          <p>Die Werkbank ist eine Datei, die Sie in einen KI-Chat Ihrer Wahl laden. Sie beschreiben das Bauteil in Worten, per Sprache oder mit einem Bild und sehen es in der Vorschau wachsen, mit Mengen, Preisen und Bauleistungen. Danach übernehmen Sie es in Skizzeo, wo es sich wie jedes andere Bauteil verhält. Dazu sollen Bibliotheken mit fertigen Bauteilen kommen, aus denen Sie auswählen.</p>
+        </div>
+      </div>
+      <div class="workbench">
+        <div class="chat" aria-label="Beispiel für eine Beschreibung im KI-Chat">
+          <p class="bubble me"><span class="who">Ihre Beschreibung</span>Bitte eine Stahlbetonstütze 24/24 cm. Fuß auf der Rohdecke, Kopf unter der Decke. Dazu die Typen 30/30 und 24/40.</p>
+          <p class="bubble"><span class="who">Werkbank</span>Die Stütze steht in der Vorschau. Beton, Schalung und Betonstahl werden mitgezählt, die Richtpreise sind als grob markiert. Die Prüfung ist in Ordnung.</p>
+        </div>
+        <figure>
+          <img src="assets/img/werkbank.png" width="1635" height="1302" alt="Prototyp der Bauteil-Werkbank: eine Stahlbetonstütze in der 3D-Vorschau, daneben Prüfung, Mengenermittlung und Kosten als Richtwert.">
+          <figcaption>Prototyp der Werkbank mit einer Stahlbetonstütze als Beispiel. Die Chat-Texte daneben sind zur Veranschaulichung formuliert.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="verwaltung-titel">
+    <div class="wrap split">
+      <div>
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Verwaltung</p>
+        <p class="status">Ausblick</p>
+        <h2 id="verwaltung-titel">Planen statt verwalten.</h2>
+      </div>
+      <div class="prose">
+        <p>Baustoffe, Preise und Bauleistungen pflegt heute eine geführte Verwaltung mit Entwurf, Vorschau und Freigabe. Ein Händlerpreis aus einem Angebot ist in drei Schritten übernommen.</p>
+        <p>Als Nächstes soll eine KI diese Arbeit übernehmen. Sie recherchiert neue Bauteile, Preise und Leistungstexte und legt sie sauber an. Eine Schulung für die Verwaltung soll es dann nicht mehr brauchen, und Sie können sich ganz auf die Planung konzentrieren.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section night" aria-labelledby="eckdaten-titel">
+    <div class="wrap">
+      <h2 id="eckdaten-titel" class="sr-only">Eckdaten</h2>
+      <ul class="facts" style="margin-top: 0;">
+        <li><h3>Für Windows</h3><p>Als eigenständiges Programm auf Ihrem Rechner.</p></li>
+        <li><h3>Ohne Internet</h3><p>Skizzeo läuft vollständig lokal und braucht keine Verbindung.</p></li>
+        <li><h3>Eigenständig entwickelt</h3><p>Eigener Geometriekern und eigene Oberfläche. Schnell und schlank.</p></li>
+        <li><h3>Sicher gespeichert</h3><p>Jeder Schritt lässt sich zurücknehmen. Gesichert wird automatisch alle fünf Minuten.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="kontakt" aria-labelledby="kontakt-titel">
+    <div class="wrap contact">
+      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Kontakt</p>
+      <h2 id="kontakt-titel">Skizzeo erscheint bald.</h2>
+      <p class="prose">Sie möchten früh dabei sein oder haben Fragen und Anregungen aus der Praxis? Schreiben Sie uns.</p>
+      <a class="mail" href="mailto:info@skizzeo.com">info@skizzeo.com</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© <span data-year>2026</span> Skizzeo</span>
+    <nav aria-label="Rechtliches">
+      <a href="index.html">Startseite</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
