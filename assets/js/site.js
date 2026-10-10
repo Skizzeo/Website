@@ -1,11 +1,147 @@
-// Skizzeo Website · Prototyp 1
-// Jahreszahl in der Fußzeile und die kleine Gummiband-Probe auf der Startseite.
+// Skizzeo Website · Prototyp 2
+// Seitenwechsel über Buttons (Hash-Adressen wie #idee), Blättern mit Pfeiltasten und
+// Wischen, Umschalter 3D | Grundriss und die kleine Gummiband-Probe.
 
 (function () {
   document.querySelectorAll('[data-year]').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
   });
 
+  /* ---------- Seiten ---------- */
+  var board = document.getElementById('board');
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  var folge = pages.filter(function (p) { return !p.hasAttribute('data-aside'); });
+  var navLinks = document.querySelectorAll('.nav a[data-nav]');
+  var legalLinks = document.querySelectorAll('.legal-links a');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var countNr = document.getElementById('count-nr');
+  var countAll = document.getElementById('count-all');
+  var countTitle = document.getElementById('count-title');
+  var tafel = window.matchMedia('(min-width: 1000px) and (min-height: 580px) and (min-aspect-ratio: 5/4)');
+  var titelBasis = 'Skizzeo';
+  var aktuell = null;
+
+  countAll.textContent = pad(folge.length);
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function finde(id) {
+    for (var i = 0; i < pages.length; i++) if (pages[i].id === id) return pages[i];
+    return null;
+  }
+
+  function zeige(id, richtung, fokus) {
+    var seite = finde(id) || folge[0];
+    if (!tafel.matches) window.scrollTo(0, 0);
+    if (seite === aktuell) return;
+    var alt = aktuell;
+    if (!richtung && alt) {
+      richtung = folge.indexOf(seite) < folge.indexOf(alt) ? 'prev' : 'next';
+    }
+    board.setAttribute('data-dir', richtung || 'next');
+
+    pages.forEach(function (p) { p.classList.toggle('is-active', p === seite); });
+    aktuell = seite;
+    board.setAttribute('data-current', seite.id);
+    board.setAttribute('data-tone', seite.getAttribute('data-tone') || 'paper');
+
+    var gruppe = seite.getAttribute('data-nav');
+    navLinks.forEach(function (a) {
+      if (a.getAttribute('data-nav') === gruppe) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    legalLinks.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + seite.id) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+
+    var i = folge.indexOf(seite);
+    board.classList.toggle('no-pager', i < 0);
+    if (i >= 0) {
+      countNr.textContent = pad(i + 1);
+      countTitle.textContent = seite.getAttribute('data-title');
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === folge.length - 1;
+    }
+
+    var t = seite.getAttribute('data-title');
+    document.title = seite.id === 'start'
+      ? 'Skizzeo – Die neue Ära der 3D-Gebäudemodellierung'
+      : t + ' – ' + titelBasis;
+
+    seite.scrollTop = 0;
+    if (fokus) seite.focus({ preventScroll: true });
+  }
+
+  function gehe(id, richtung) {
+    if (location.hash === '#' + id) { zeige(id, richtung, true); return; }
+    naechsteRichtung = richtung;
+    location.hash = id;
+  }
+
+  function blaettern(schritt) {
+    var i = folge.indexOf(aktuell);
+    if (i < 0) i = 0;
+    var j = i + schritt;
+    if (j < 0 || j >= folge.length) return;
+    gehe(folge[j].id, schritt > 0 ? 'next' : 'prev');
+  }
+
+  var naechsteRichtung = null;
+  window.addEventListener('hashchange', function () {
+    zeige(location.hash.slice(1), naechsteRichtung, true);
+    naechsteRichtung = null;
+    // Der Browser springt sonst nachträglich zum Anker unter die feste Kopfzeile
+    if (!tafel.matches) requestAnimationFrame(function () { window.scrollTo(0, 0); });
+  });
+
+  prevBtn.addEventListener('click', function () { blaettern(-1); });
+  nextBtn.addEventListener('click', function () { blaettern(1); });
+
+  // Pfeiltasten blättern, außer wenn ein Bedienelement die Taste selbst nutzt
+  document.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var ziel = e.target;
+    if (ziel && (ziel.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(ziel.tagName))) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { blaettern(1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { blaettern(-1); e.preventDefault(); }
+  });
+
+  // Wischen auf Touch-Bildschirmen im Tafel-Modus
+  var wisch = null;
+  board.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'touch' || !tafel.matches || e.target.closest('.plan')) { wisch = null; return; }
+    wisch = { x: e.clientX, y: e.clientY };
+  });
+  board.addEventListener('pointerup', function (e) {
+    if (!wisch) return;
+    var dx = e.clientX - wisch.x, dy = e.clientY - wisch.y;
+    wisch = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) blaettern(dx < 0 ? 1 : -1);
+  });
+
+  zeige(location.hash.slice(1), 'next', false);
+  if (location.hash && !tafel.matches) {
+    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+  }
+
+  /* ---------- Umschalter 3D | Grundriss ---------- */
+  document.querySelectorAll('.toggle').forEach(function (gruppe) {
+    var fig = gruppe.closest('figure');
+    var bilder = fig.querySelectorAll('.swap img');
+    var caption = fig.querySelector('figcaption');
+    gruppe.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-show]');
+      if (!btn) return;
+      var wahl = btn.getAttribute('data-show');
+      gruppe.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      bilder.forEach(function (img) { img.classList.toggle('off', img.getAttribute('data-view') !== wahl); });
+      caption.textContent = caption.getAttribute('data-caption-' + wahl);
+    });
+    bilder.forEach(function (img, n) { if (n > 0) img.classList.add('off'); });
+  });
+
+  /* ---------- Gummiband-Probe ---------- */
   var plan = document.getElementById('plan');
   if (!plan) return;
 

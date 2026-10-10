@@ -1,12 +1,22 @@
 # Skizzeo Website
 
-Statische Website für skizzeo.com, Prototyp 1 (Stand 09.10.2026). Sie ist eine Fortsetzung der bisherigen Einseiten-Ankündigung.
+Statische Website für skizzeo.com, Prototyp 2 (Stand 10.10.2026). Sie ist eine Fortsetzung der bisherigen Einseiten-Ankündigung.
+
+Konzept: Eine ruhige Tafel im Format 16:9 mit freiem Rand ringsum. Die Seiten wechseln über Buttons, Pfeiltasten oder Wischen; auf Monitoren, Laptops und Tablets quer passt jede Seite ohne Scrollen auf die Tafel. Auf Handys wird daraus eine normale, kurze Seite je Abschnitt.
 
 ## Seiten
 
-- `index.html`: Startseite mit Ankündigung, Idee, gekoppeltem Modell und Auswertung, Gummiband-Probe und Zielgruppen
-- `einblick.html`: Einblick ins Programm (Ansichten, Bauwissen, Auswertung, Bauteil-Werkbank, Verwaltung, Eckdaten, Kontakt)
-- `impressum.html`, `datenschutz.html`: Rechtliches; die Datenschutzerklärung ist ein Entwurf mit offenen Stellen zum Hosting
+Alle Seiten liegen in `index.html` und haben eigene Adressen:
+
+1. `#start` Ankündigung
+2. `#idee` Die Idee
+3. `#fuer-wen` Zielgruppen
+4. `#modell`, `#ansichten`, `#bauwissen`, `#auswertung`: Programm mit Unterseiten
+5. `#ausprobieren` Gummiband-Probe
+6. `#werkbank`, `#verwaltung`: Bauteil-Werkbank und Verwaltung
+7. `#kontakt` Kontakt und Eckdaten
+
+Dazu `#impressum` und `#datenschutz` (die Datenschutzerklärung ist ein Entwurf mit offenen Stellen zum Hosting).
 
 ## Offline ansehen
 
@@ -15,8 +25,8 @@ Statische Website für skizzeo.com, Prototyp 1 (Stand 09.10.2026). Sie ist eine 
 ## Aufbau
 
 - `assets/css/site.css`: gesamte Gestaltung, Farb- und Schrift-Tokens oben in `:root`
-- `assets/js/site.js`: Jahreszahl und die Gummiband-Probe auf der Startseite
-- `assets/img/`: Bildschirmbilder aus dem Übergabepaket (Bild 04 beschnitten), Werkbank-Bild aus dem Werkbank-Prototyp, Logo als SVG
+- `assets/js/site.js`: Seitenwechsel, Umschalter 3D/Grundriss und die Gummiband-Probe
+- `assets/img/`: Bildschirmbilder aus dem Übergabepaket (Bild 04 beschnitten), Werkbank-Bild aus dem Werkbank-Prototyp, Verwaltungsdialog aus Bild 14, Logo als SVG
 - `assets/fonts/`: Archivo und IBM Plex Mono (beide SIL Open Font License), lokal eingebunden
 
 ## Veröffentlichen

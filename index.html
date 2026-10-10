@@ -7,6 +7,7 @@
 <meta name="description" content="Skizzeo ist ein 3D-Gebäudemodellierer für Einfamilien-, Doppel- und Mehrfamilienhäuser. Modell, Mengen, Kosten und Ausschreibung laufen gleichzeitig und in Echtzeit.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -14,48 +15,59 @@
   <defs>
     <path id="sk" d="M0 237.5 C0 96.5 103.9 0 259.6 0 L586 0 L586 434.7 L935 0 L1190 0 L840 427.5 L1219 909 L956.5 909 L587.3 452 C518.5 366.9 419 287 339 287 L0 287 Z M0 390.6 L0 909 L445.5 909 C532.1 909 602.2 836.9 602.2 748 C602.2 659.1 532.1 587 445.5 587 L281.5 587 C157.1 587 38.5 480.6 0 390.6 Z"/>
     <symbol id="kote" viewBox="0 0 14 14"><path d="M1 3 H13 L7 12 Z"/></symbol>
+    <symbol id="pfeil" viewBox="0 0 18 18"><path d="M2 9 H15 M10 4 L15 9 L10 14"/></symbol>
   </defs>
 </svg>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Skizzeo Startseite">
+<div class="board" id="board" data-current="start" data-tone="stone">
+
+  <div class="board-art" aria-hidden="true">
+    <svg class="giant" viewBox="0 0 1219 909"><use href="#sk"/></svg>
+    <svg class="mark" viewBox="0 0 1219 909"><use href="#sk"/></svg>
+  </div>
+
+  <header class="top">
+    <a class="brand" href="#start" aria-label="Skizzeo Startseite">
       <svg viewBox="0 0 1219 909" aria-hidden="true"><use href="#sk"/></svg>
       Skizzeo
     </a>
-    <nav aria-label="Hauptnavigation">
-      <a href="einblick.html">Einblick</a>
-      <a class="hide-sm" href="#kontakt">Kontakt</a>
-      <span class="soon">Coming soon</span>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#start" data-nav="start">Start</a>
+      <a href="#idee" data-nav="idee">Idee</a>
+      <a href="#fuer-wen" data-nav="fuer-wen">Für wen</a>
+      <a href="#modell" data-nav="programm">Programm</a>
+      <a href="#ausprobieren" data-nav="ausprobieren">Ausprobieren</a>
+      <a href="#werkbank" data-nav="werkbank">Werkbank</a>
+      <a href="#kontakt" data-nav="kontakt">Kontakt</a>
     </nav>
-  </div>
-</header>
+    <span class="soon">Coming soon</span>
+  </header>
 
-<main>
-  <section class="hero" aria-labelledby="titel">
-    <div class="hero-art" aria-hidden="true">
-      <svg class="giant" viewBox="0 0 1219 909"><use href="#sk"/></svg>
-      <svg class="mark" viewBox="0 0 1219 909"><use href="#sk"/></svg>
-    </div>
-    <div class="wrap">
-      <h1 id="titel">Die neue Ära der<br class="d"> 3D-Gebäude&shy;modellierung.</h1>
-      <div class="hero-foot">
+  <main class="stage" id="stage">
+
+    <!-- 1 · Start -->
+    <section class="page p-start" id="start" data-nav="start" data-title="Start" data-tone="stone" aria-labelledby="t-start" tabindex="-1">
+      <div class="page-body">
+        <h1 id="t-start">Die neue Ära der<br class="d"> 3D-Gebäude&shy;modellierung.</h1>
         <p class="tagline"><span>Intuitiv.</span> <span>Kreativ.</span> <span>Echtzeit.</span></p>
-        <a class="scroll-cue" href="#idee"><span aria-hidden="true"></span>Mehr erfahren</a>
+        <p class="lede">Skizzeo ist ein 3D-Gebäudemodellierer für Ein-, Doppel- und Mehrfamilienhäuser. Modell, Mengen, Kosten und Ausschreibung laufen in einem Programm, gleichzeitig und in Echtzeit.</p>
+        <p class="actions">
+          <a class="btn" href="#idee">Mehr erfahren <svg aria-hidden="true"><use href="#pfeil"/></svg></a>
+          <a class="btn ghost" href="#ausprobieren">Direkt ausprobieren</a>
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" id="idee" aria-labelledby="idee-titel">
-    <div class="wrap split">
-      <div>
-        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg><b>−0,80</b> Fundament · Die Idee</p>
-        <h2 id="idee-titel">Gebaut für das Wohnhaus. Gedacht von einem Bauplaner.</h2>
-      </div>
-      <div>
-        <div class="prose">
-          <p>Skizzeo ist ein 3D-Gebäudemodellierer für <strong>Einfamilien-, Doppel- und Mehrfamilienhäuser</strong>. Das Programm will nicht jede Bauaufgabe lösen. Es soll genau diese Häuser sehr gut können.</p>
-          <p>Hinter Skizzeo steht ein Bauplaner und Bauingenieur mit dreißig Jahren Praxis. Das Programm bildet seinen Arbeitsablauf ab, vom ersten Umriss bis zum Leistungsverzeichnis, und lässt beim Entwerfen alle Freiheit.</p>
+    <!-- 2 · Idee -->
+    <section class="page p-idee" id="idee" data-nav="idee" data-title="Die Idee" aria-labelledby="t-idee" tabindex="-1">
+      <div class="page-body">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Die Idee</p>
+          <h2 id="t-idee">Gebaut für das Wohnhaus. Gedacht von einem Bauplaner.</h2>
+          <div class="prose">
+            <p>Skizzeo ist ein 3D-Gebäudemodellierer für <strong>Einfamilien-, Doppel- und Mehrfamilienhäuser</strong>. Das Programm will nicht jede Bauaufgabe lösen. Es soll genau diese Häuser sehr gut können.</p>
+            <p>Hinter Skizzeo steht ein Bauplaner und Bauingenieur mit dreißig Jahren Praxis. Das Programm bildet seinen Arbeitsablauf ab, vom ersten Umriss bis zum Leistungsverzeichnis, und lässt beim Entwerfen alle Freiheit.</p>
+          </div>
         </div>
         <dl class="contrast">
           <div><dt>Arbeitsweise</dt><dd>Sie arbeiten direkt am Bauteil: im 3D-Modell, im Grundriss, im Schnitt und in der Ansicht.</dd></div>
@@ -63,124 +75,300 @@
           <div><dt>Einstieg</dt><dd>Keine Parameterflut und keine lange Schulung. Was Skizzeo sinnvoll selbst festlegen kann, legt es selbst fest.</dd></div>
         </dl>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section night" aria-labelledby="kopplung-titel">
-    <div class="wrap">
-      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg><b>±0,00</b> Erdgeschoss · Modell und Auswertung</p>
-      <div class="split">
-        <h2 id="kopplung-titel">Modell und Kosten. Gleichzeitig und gekoppelt.</h2>
-        <div class="prose">
-          <p>Neben dem 3D-Modell oder dem Grundriss öffnen Sie ein zweites Fenster mit <strong>Mengenermittlung, Kostenschätzung und Ausschreibung</strong>. Es liegt daneben oder auf einem zweiten Bildschirm.</p>
-          <p>Beide Fenster sind in beide Richtungen verbunden. Markieren Sie eine Zeile in der Mengenermittlung, leuchtet das Bauteil im Modell auf. Wählen Sie eine Wand im Modell, zeigt die Liste ihre Zeile. Jede Änderung am Modell sehen Sie sofort in Mengen und Kosten.</p>
+    <!-- 3 · Für wen -->
+    <section class="page p-wer" id="fuer-wen" data-nav="fuer-wen" data-title="Für wen" aria-labelledby="t-wer" tabindex="-1">
+      <div class="page-body">
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Für wen</p>
+        <h2 id="t-wer">Für Praktiker, nicht für CAD-Spezialisten.</h2>
+        <p class="lede">Für alle, die Wohnhäuser planen, bauen oder verkaufen und schnell zu einem Modell mit Mengen und Kosten kommen wollen.</p>
+        <ul class="people">
+          <li><span class="nr">01</span><h3>Architekten</h3><p>Entwerfen direkt in 3D, Bauzeichnungen nach deutscher Norm und ein Kostenrahmen aus demselben Modell.</p></li>
+          <li><span class="nr">02</span><h3>Bauunternehmer</h3><p>Ein Haus im Kundengespräch in Minuten modellieren, Mengen und Kosten sofort sehen, Leistungsverzeichnisse je Gewerk erstellen.</p></li>
+          <li><span class="nr">03</span><h3>Bauträger</h3><p>Wandtypen, Baustoffe, Preise und Bauleistungen der eigenen Firma einmal anlegen und in jedem Projekt nutzen.</p></li>
+          <li><span class="nr">04</span><h3>Immobilienmakler</h3><p>Ein anschauliches 3D-Modell und eine erste Kostenschätzung für das Gespräch mit Interessenten, ohne CAD-Kenntnisse.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 · Programm: Modell und Kosten -->
+    <section class="page p-modell" id="modell" data-nav="programm" data-title="Modell und Kosten" aria-labelledby="t-modell" tabindex="-1">
+      <nav class="subnav" aria-label="Programm">
+        <a href="#modell" aria-current="page">Modell und Kosten</a><a href="#ansichten">Ansichten</a><a href="#bauwissen">Bauwissen</a><a href="#auswertung">Auswertung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Modell und Auswertung</p>
+          <h2 id="t-modell">Modell und Kosten. Gleichzeitig und gekoppelt.</h2>
+          <div class="prose">
+            <p>Neben dem 3D-Modell oder dem Grundriss öffnen Sie ein zweites Fenster mit <strong>Mengen, Kosten und Ausschreibung</strong>, daneben oder auf einem zweiten Bildschirm.</p>
+            <p>Beide Fenster sind in beide Richtungen verbunden: Markieren Sie eine Zeile, leuchtet das Bauteil im Modell auf, und umgekehrt.</p>
+          </div>
+          <ul class="ticks">
+            <li><b>Echtzeit.</b> Jede Änderung am Modell sofort in Mengen und Kosten.</li>
+            <li><b>Ein Programm.</b> Kein Datenaustausch zwischen getrennten Programmen.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="assets/img/modell-und-mengen.png" width="1440" height="800" alt="Skizzeo mit zwei Fenstern: links das 3D-Modell eines zweigeschossigen Hauses, rechts die Mengenermittlung. Die Außenwand AW-003 ist in beiden Fenstern hervorgehoben.">
+          <figcaption>Aktueller Entwicklungsstand: Die Außenwand AW-003 ist links im Modell und rechts in der Mengenermittlung markiert.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 5 · Programm: Ansichten -->
+    <section class="page p-ansichten" id="ansichten" data-nav="programm" data-title="Ansichten" aria-labelledby="t-ansichten" tabindex="-1">
+      <nav class="subnav" aria-label="Programm">
+        <a href="#modell">Modell und Kosten</a><a href="#ansichten" aria-current="page">Ansichten</a><a href="#bauwissen">Bauwissen</a><a href="#auswertung">Auswertung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Ansichten</p>
+          <h2 id="t-ansichten">Ein Modell. Jede Ansicht bearbeitbar.</h2>
+          <div class="prose">
+            <p>3D-Modell, Grundriss, Schnitt und Ansichten zeigen dieselben Bauteile. In jeder Sicht arbeiten Sie mit denselben Werkzeugen, und alle anderen Sichten folgen sofort.</p>
+            <p>Die Bauzeichnungen folgen der deutschen Norm: tragende Bauteile mit breiter Schnittkontur, normgerechte Schraffuren für Beton, Mauerwerk und Dämmung.</p>
+          </div>
+        </div>
+        <figure class="shot">
+          <div class="swap">
+            <img data-view="3d" src="assets/img/ansicht-3d.png" width="1280" height="800" alt="3D-Modell eines zweigeschossigen Hauses mit Werkzeugen, Geschossleiste, Ansichten und Projektbaum. Die Außenwände des Erdgeschosses sind orange hervorgehoben.">
+            <img data-view="grundriss" src="assets/img/ansicht-grundriss.png" width="1280" height="800" alt="Grundriss als Bauzeichnung mit schraffierten Außenwänden, einer Innenwand, der Schnittlinie A und dem Geschossbogen.">
+          </div>
+          <div class="figrow">
+            <figcaption data-caption-3d="3D-Modell mit Projektbaum. Ausgewählte Wände leuchten orange." data-caption-grundriss="Grundriss mit Schnittlinie und Geschossbogen zum Wechsel der Geschosse.">3D-Modell mit Projektbaum. Ausgewählte Wände leuchten orange.</figcaption>
+            <div class="toggle" role="group" aria-label="Ansicht wählen">
+              <button type="button" data-show="3d" aria-pressed="true">3D</button><button type="button" data-show="grundriss" aria-pressed="false">Grundriss</button>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 6 · Programm: Bauwissen -->
+    <section class="page p-bauwissen" id="bauwissen" data-nav="programm" data-title="Bauwissen" aria-labelledby="t-bauwissen" tabindex="-1">
+      <nav class="subnav" aria-label="Programm">
+        <a href="#modell">Modell und Kosten</a><a href="#ansichten">Ansichten</a><a href="#bauwissen" aria-current="page">Bauwissen</a><a href="#auswertung">Auswertung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Bauwissen</p>
+          <h2 id="t-bauwissen">Denkt wie ein Bauplaner.</h2>
+          <div class="prose">
+            <p>Jedes Bauteil ist so modelliert, wie es auf der Baustelle entsteht und abgerechnet wird. Springt das Obergeschoss zurück, entsteht auf der Decke von selbst eine <strong>Dachterrasse</strong> mit Dämmung, Belag, Attika und Attikablech.</p>
+          </div>
+          <ul class="ticks">
+            <li>Gründung mit Stahlbeton-Sohlplatte und umlaufender Frostschürze.</li>
+            <li>Geschosshöhe ziehen oder eintippen, und das ganze Haus passt sich an.</li>
+            <li>Wandaufbauten aus einem Bauteilkatalog, auch als Firmenkatalog.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <div class="pair">
+            <img src="assets/img/dachterrasse.png" width="900" height="760" alt="3D-Modell eines Hauses mit zurückspringendem Obergeschoss. Auf der Erdgeschossdecke ist eine Dachterrasse mit Attikablech entstanden.">
+            <img src="assets/img/ansicht-schnittdetail.png" width="745" height="760" alt="Ausschnitt aus einem Schnitt: mehrschalige Außenwand, Decke und Dachterrasse mit Attika, normgerecht schraffiert.">
+          </div>
+          <figcaption>Das Obergeschoss springt zurück, die Dachterrasse entsteht automatisch. Rechts derselbe Bereich im Schnitt.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 7 · Programm: Auswertung -->
+    <section class="page p-auswertung" id="auswertung" data-nav="programm" data-title="Auswertung" aria-labelledby="t-auswertung" tabindex="-1">
+      <nav class="subnav" aria-label="Programm">
+        <a href="#modell">Modell und Kosten</a><a href="#ansichten">Ansichten</a><a href="#bauwissen">Bauwissen</a><a href="#auswertung" aria-current="page">Auswertung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Auswertung</p>
+          <h2 id="t-auswertung">Mengen, Kosten, Leistungs&shy;verzeichnis.</h2>
+          <div class="prose">
+            <p>Ein Klick öffnet die Auswertung mit drei Karten: <strong>Mengen</strong> je Bauteil, Geschoss, Baustoff und Gewerk, die <strong>Kostenschätzung</strong> nach Gewerk, Geschoss oder Kostengruppe nach DIN 276 und das <strong>Leistungsverzeichnis</strong> je Los und Gewerk als PDF, mit oder ohne Preise.</p>
+          </div>
+          <ul class="ticks">
+            <li>Kosten nur für Material oder für Material und Lohn.</li>
+            <li>Eigene Firmenpreise und Bauleistungen hinterlegen.</li>
+            <li>Mengen so getrennt, wie sie abgerechnet werden.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="assets/img/mengen.png" width="820" height="500" alt="Auswertungsfenster mit den Karten Mengen, Kosten und AVA. Die Mengenermittlung ist nach Gewerk gegliedert und zeigt Frostschürze, Sohlplatte und Decken.">
+          <figcaption>Die Karte Mengen im Auswertungsfenster, gegliedert nach Gewerk.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 8 · Ausprobieren -->
+    <section class="page p-probe" id="ausprobieren" data-nav="ausprobieren" data-title="Ausprobieren" aria-labelledby="t-probe" tabindex="-1">
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Zum Ausprobieren</p>
+          <h2 id="t-probe">Ziehen Sie die Wand.</h2>
+          <div class="prose">
+            <p>So fühlt sich Echtzeit an. Ziehen Sie das violette Band an der rechten Außenwand. Grundfläche, Wandflächen und Kosten rechnen sofort mit.</p>
+            <p>In Skizzeo funktioniert das genauso, im 3D-Modell, im Grundriss, im Schnitt und in den Ansichten.</p>
+          </div>
+        </div>
+        <div class="probe">
+          <div class="plan" id="plan">
+            <svg viewBox="0 0 720 470" role="group" aria-label="Vereinfachter Grundriss eines Hauses mit verschiebbarer rechter Außenwand">
+              <defs>
+                <pattern id="schraffur" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="7" height="7" fill="#ffffff"/>
+                  <line class="hatch-line" x1="0" y1="0" x2="0" y2="7"/>
+                </pattern>
+              </defs>
+              <rect class="wall" id="p-outer" x="60" y="50" width="400" height="320"/>
+              <rect class="room" id="p-inner" x="75" y="65" width="370" height="290"/>
+              <g>
+                <line class="dim" id="p-dh-line" x1="60" y1="410" x2="460" y2="410"/>
+                <line class="dim" x1="60" y1="400" x2="60" y2="420"/>
+                <line class="dim" id="p-dh-end" x1="460" y1="400" x2="460" y2="420"/>
+                <text class="dim-text" id="p-dh-text" x="260" y="402" text-anchor="middle">10,00</text>
+              </g>
+              <g>
+                <line class="dim" x1="30" y1="50" x2="30" y2="370"/>
+                <line class="dim" x1="20" y1="50" x2="40" y2="50"/>
+                <line class="dim" x1="20" y1="370" x2="40" y2="370"/>
+                <text class="dim-text" x="22" y="216" text-anchor="middle" transform="rotate(-90 22 210)">8,00</text>
+              </g>
+              <text class="hint" id="p-hint" x="478" y="214">Band ziehen</text>
+              <rect class="band-hit" id="p-hit" x="446" y="50" width="28" height="320" tabindex="0" role="slider" aria-label="Länge des Hauses in Metern" aria-valuemin="7" aria-valuemax="14" aria-valuenow="10" aria-valuetext="10,00 Meter"/>
+              <rect class="band" id="p-band" x="457" y="50" width="6" height="320" rx="3"/>
+            </svg>
+          </div>
+          <div class="ledger" aria-live="polite">
+            <h3>Rohbau und Fassade <small>Beispiel</small></h3>
+            <table>
+              <tbody>
+                <tr><th scope="row">Hausmaß</th><td id="o-mass">10,00 × 8,00 m</td></tr>
+                <tr><th scope="row">Grundfläche</th><td id="o-flaeche">80,00 m²</td></tr>
+                <tr><th scope="row">Außenwand, 2 Geschosse</th><td id="o-wand">205,56 m²</td></tr>
+                <tr><th scope="row">Mauerwerk und WDVS</th><td id="o-wandkosten">34.945 €</td></tr>
+                <tr><th scope="row">Sohlplatte und Decken</th><td id="o-beton">11.933 €</td></tr>
+                <tr class="sum"><th scope="row">Summe netto</th><td id="o-summe">46.878 €</td></tr>
+              </tbody>
+            </table>
+            <p class="note">Vereinfachtes Beispiel mit gerundeten, unverbindlichen Richtwerten. Keine Kalkulation.</p>
+          </div>
         </div>
       </div>
-      <figure class="shot">
-        <img src="assets/img/modell-und-mengen.png" width="1440" height="800" alt="Skizzeo mit zwei Fenstern: links das 3D-Modell eines zweigeschossigen Hauses, rechts die Mengenermittlung. Die Außenwand AW-003 ist in beiden Fenstern hervorgehoben.">
-        <figcaption>Aktueller Entwicklungsstand: Die Außenwand AW-003 ist links im Modell und rechts in der Mengenermittlung markiert.</figcaption>
-      </figure>
-      <ul class="facts">
-        <li><h3>Echtzeit</h3><p>Jede gezogene Wand ändert sofort Mengen, Kosten und Leistungsverzeichnis. Ohne Export und ohne Neuberechnung.</p></li>
-        <li><h3>In beide Richtungen</h3><p>Vom Modell zur Liste und von der Liste zurück zum Modell.</p></li>
-        <li><h3>Ein Programm</h3><p>Modellieren, Mengen, Kosten und Ausschreibung ohne Datenaustausch zwischen getrennten Programmen.</p></li>
-        <li><h3>Zwei Bildschirme</h3><p>Das Auswertungsfenster lässt sich auf einen zweiten Bildschirm ziehen.</p></li>
-      </ul>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" aria-labelledby="probe-titel">
-    <div class="wrap">
-      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg><b>+2,855</b> Obergeschoss · Zum Ausprobieren</p>
-      <div class="split">
-        <h2 id="probe-titel">Ziehen Sie die Wand.</h2>
-        <div class="prose">
-          <p>So fühlt sich Echtzeit an. Ziehen Sie das violette Band an der rechten Außenwand. Grundfläche, Wandflächen und Kosten rechnen sofort mit.</p>
-          <p>In Skizzeo funktioniert das genauso, im 3D-Modell, im Grundriss, im Schnitt und in den Ansichten.</p>
+    <!-- 9 · Werkbank -->
+    <section class="page p-werkbank" id="werkbank" data-nav="werkbank" data-title="Bauteil-Werkbank" aria-labelledby="t-werkbank" tabindex="-1">
+      <nav class="subnav" aria-label="Werkbank">
+        <a href="#werkbank" aria-current="page">Bauteil-Werkbank</a><a href="#verwaltung">Verwaltung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="status">In Entwicklung</p>
+          <h2 id="t-werkbank">Eigene Bauteile. Ohne Programmieren.</h2>
+          <div class="prose">
+            <p>Mit der Bauteil-Werkbank legen Sie eigene, firmenbezogene Bauteile an, ganz ohne Programmier- oder Skriptkenntnisse. Sie laden die Werkbank in einen KI-Chat Ihrer Wahl und beschreiben das Bauteil in Worten, per Sprache oder mit einem Bild. In der Vorschau wächst es mit Mengen, Preisen und Bauleistungen. Danach übernehmen Sie es in Skizzeo.</p>
+          </div>
+          <div class="chat" aria-label="Beispiel für eine Beschreibung im KI-Chat">
+            <p class="bubble me"><span class="who">Ihre Beschreibung</span>Bitte eine Stahlbetonstütze 24/24 cm, Fuß auf der Rohdecke, Kopf unter der Decke. Dazu die Typen 30/30 und 24/40.</p>
+            <p class="bubble"><span class="who">Werkbank</span>Die Stütze steht in der Vorschau. Beton, Schalung und Betonstahl werden mitgezählt, die Richtpreise sind als grob markiert.</p>
+          </div>
+        </div>
+        <figure class="shot">
+          <img src="assets/img/werkbank.png" width="1635" height="1302" alt="Prototyp der Bauteil-Werkbank: eine Stahlbetonstütze in der 3D-Vorschau, daneben Prüfung, Mengenermittlung und Kosten als Richtwert.">
+          <figcaption>Prototyp der Werkbank mit einer Stahlbetonstütze. Die Chat-Texte sind zur Veranschaulichung formuliert.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 10 · Werkbank: Verwaltung -->
+    <section class="page p-verwaltung" id="verwaltung" data-nav="werkbank" data-title="Verwaltung" aria-labelledby="t-verwaltung" tabindex="-1">
+      <nav class="subnav" aria-label="Werkbank">
+        <a href="#werkbank">Bauteil-Werkbank</a><a href="#verwaltung" aria-current="page">Verwaltung</a>
+      </nav>
+      <div class="page-body lay">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Verwaltung</p>
+          <h2 id="t-verwaltung">Planen statt verwalten.</h2>
+          <div class="prose">
+            <p>Baustoffe, Preise und Bauleistungen pflegt heute eine geführte Verwaltung mit Entwurf, Vorschau und Freigabe. Ein Händlerpreis aus einem Angebot ist in drei Schritten übernommen.</p>
+          </div>
+          <div class="outlook">
+            <p class="status">Ausblick</p>
+            <p>Als Nächstes soll eine KI diese Arbeit übernehmen. Sie recherchiert neue Bauteile, Preise und Leistungstexte und legt sie sauber an. Eine Schulung für die Verwaltung soll es dann nicht mehr brauchen.</p>
+          </div>
+        </div>
+        <figure class="shot">
+          <img src="assets/img/verwaltung.png" width="840" height="560" alt="Geführter Dialog „Händlerpreis für dieses Haus eintragen“ im zweiten von drei Schritten: Eingabe des Preises je Kilogramm aus dem Angebot.">
+          <figcaption>Heute: Ein Händlerpreis wird in drei geführten Schritten eingetragen.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 11 · Kontakt -->
+    <section class="page p-kontakt" id="kontakt" data-nav="kontakt" data-title="Kontakt" data-tone="stone" aria-labelledby="t-kontakt" tabindex="-1">
+      <div class="page-body">
+        <div>
+          <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Kontakt</p>
+          <h2 id="t-kontakt">Skizzeo erscheint bald.</h2>
+          <p class="lede">Sie möchten früh dabei sein oder haben Fragen und Anregungen aus der Praxis? Schreiben Sie uns.</p>
+          <a class="mail" href="mailto:info@skizzeo.com">info@skizzeo.com</a>
+        </div>
+        <ul class="eck" aria-label="Eckdaten">
+          <li><h3>Für Windows</h3><p>Als eigenständiges Programm auf Ihrem Rechner.</p></li>
+          <li><h3>Ohne Internet</h3><p>Skizzeo läuft vollständig lokal und braucht keine Verbindung.</p></li>
+          <li><h3>Eigenständig entwickelt</h3><p>Eigener Geometriekern und eigene Oberfläche. Schnell und schlank.</p></li>
+          <li><h3>Sicher gespeichert</h3><p>Jeder Schritt lässt sich zurücknehmen. Gesichert wird automatisch alle fünf Minuten.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Rechtliches, außerhalb der Seitenfolge -->
+    <section class="page p-recht" id="impressum" data-aside data-title="Impressum" aria-labelledby="t-impressum" tabindex="-1">
+      <div class="page-body">
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Rechtliches</p>
+        <h2 id="t-impressum">Impressum</h2>
+        <div class="cols">
+          <div><h3>Angaben gemäß § 5 DDG</h3><p>Dipl.-Ing. (FH) Jörn Horstmann<br>Denkmalsweg 18b<br>27777 Ganderkesee<br>Deutschland</p></div>
+          <div><h3>Kontakt</h3><p>E-Mail: <a href="mailto:info@skizzeo.com">info@skizzeo.com</a></p></div>
+          <div><h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>Dipl.-Ing. (FH) Jörn Horstmann, Anschrift wie oben.</p></div>
+          <div><h3>Haftung für Inhalte</h3><p>Die Inhalte dieser Seiten wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Skizzeo befindet sich in Entwicklung. Beschriebene Funktionen und Bilder zeigen einen Entwicklungsstand und können sich ändern.</p></div>
+          <div><h3>Haftung für Links</h3><p>Diese Website enthält keine Links zu externen Websites Dritter. Sollte sich das ändern, gilt: Für die Inhalte verlinkter Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p></div>
+          <div><h3>Urheberrecht</h3><p>Texte, Bilder, Grafiken und das Logo auf dieser Website sind urheberrechtlich geschützt. Eine Verwendung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung.</p></div>
         </div>
       </div>
-      <div class="probe" style="margin-top: clamp(32px, 5vw, 56px);">
-        <div class="plan" id="plan">
-          <svg viewBox="0 0 720 470" role="group" aria-label="Vereinfachter Grundriss eines Hauses mit verschiebbarer rechter Außenwand">
-            <defs>
-              <pattern id="schraffur" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width="7" height="7" fill="#ffffff"/>
-                <line class="hatch-line" x1="0" y1="0" x2="0" y2="7"/>
-              </pattern>
-            </defs>
-            <rect class="wall" id="p-outer" x="60" y="50" width="400" height="320"/>
-            <rect class="room" id="p-inner" x="75" y="65" width="370" height="290"/>
-            <g id="p-dim-h">
-              <line class="dim" id="p-dh-line" x1="60" y1="410" x2="460" y2="410"/>
-              <line class="dim" x1="60" y1="400" x2="60" y2="420"/>
-              <line class="dim" id="p-dh-end" x1="460" y1="400" x2="460" y2="420"/>
-              <text class="dim-text" id="p-dh-text" x="260" y="402" text-anchor="middle">10,00</text>
-            </g>
-            <g>
-              <line class="dim" x1="30" y1="50" x2="30" y2="370"/>
-              <line class="dim" x1="20" y1="50" x2="40" y2="50"/>
-              <line class="dim" x1="20" y1="370" x2="40" y2="370"/>
-              <text class="dim-text" x="22" y="216" text-anchor="middle" transform="rotate(-90 22 210)">8,00</text>
-            </g>
-            <text class="hint" id="p-hint" x="478" y="214">Band ziehen</text>
-            <rect class="band-hit" id="p-hit" x="446" y="50" width="28" height="320" tabindex="0" role="slider" aria-label="Länge des Hauses in Metern" aria-valuemin="7" aria-valuemax="14" aria-valuenow="10" aria-valuetext="10,00 Meter"/>
-            <rect class="band" id="p-band" x="457" y="50" width="6" height="320" rx="3"/>
-          </svg>
-        </div>
-        <div class="ledger" aria-live="polite">
-          <h3>Rohbau und Fassade <small>Beispiel</small></h3>
-          <table>
-            <tbody>
-              <tr><th scope="row">Hausmaß</th><td id="o-mass">10,00 × 8,00 m</td></tr>
-              <tr><th scope="row">Grundfläche</th><td id="o-flaeche">80,00 m²</td></tr>
-              <tr><th scope="row">Außenwand, 2 Geschosse</th><td id="o-wand">205,56 m²</td></tr>
-              <tr><th scope="row">Mauerwerk und WDVS</th><td id="o-wandkosten">34.945 €</td></tr>
-              <tr><th scope="row">Sohlplatte und Decken</th><td id="o-beton">11.933 €</td></tr>
-              <tr class="sum"><th scope="row">Summe netto</th><td id="o-summe">46.878 €</td></tr>
-            </tbody>
-          </table>
-          <p class="note">Vereinfachtes Beispiel im Browser mit gerundeten, unverbindlichen Richtwerten. Keine Kalkulation.</p>
+    </section>
+
+    <section class="page p-recht" id="datenschutz" data-aside data-title="Datenschutz" aria-labelledby="t-datenschutz" tabindex="-1">
+      <div class="page-body">
+        <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg>Rechtliches</p>
+        <h2 id="t-datenschutz">Datenschutz</h2>
+        <p class="draft-note">Entwurf für den Prototyp. Vor der Veröffentlichung bitte prüfen, insbesondere die Angaben zum Hosting. Stellen in Gelb sind noch offen.</p>
+        <div class="cols">
+          <div><h3>Verantwortlicher</h3><p>Dipl.-Ing. (FH) Jörn Horstmann, Denkmalsweg 18b, 27777 Ganderkesee, E-Mail: <a href="mailto:info@skizzeo.com">info@skizzeo.com</a></p></div>
+          <div><h3>Grundsatz</h3><p>Diese Website ist ein reines Informationsangebot. Sie setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und bindet keine Inhalte fremder Anbieter ein. Schriften und Bilder werden vom eigenen Server geladen.</p></div>
+          <div><h3>Server-Logdateien</h3><p>Beim Aufruf der Website verarbeitet der Hosting-Anbieter technisch notwendige Daten, die Ihr Browser übermittelt: IP-Adresse, Datum und Uhrzeit des Abrufs, aufgerufene Seite, Browsertyp und Betriebssystem sowie die zuvor besuchte Seite. Diese Daten dienen der sicheren und stabilen Bereitstellung der Website. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Die Logdateien werden nach <span class="todo">[Speicherdauer beim Hoster erfragen]</span> gelöscht.</p><p>Hosting-Anbieter: <span class="todo">[Name und Anschrift des Hosters]</span>. Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO <span class="todo">[prüfen]</span>.</p></div>
+          <div><h3>Kontakt per E-Mail</h3><p>Wenn Sie uns per E-Mail schreiben, verarbeiten wir Ihre Angaben, um Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b oder f DSGVO. Die Daten werden gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p></div>
+          <div><h3>Ihre Rechte</h3><p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten, auf Datenübertragbarkeit sowie auf Widerspruch gegen die Verarbeitung. Wenden Sie sich dazu an die oben genannte Adresse.</p><p>Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für den Datenschutz Niedersachsen.</p></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" aria-labelledby="wer-titel">
-    <div class="wrap">
-      <p class="kote"><svg aria-hidden="true"><use href="#kote"/></svg><b>+5,71</b> Oberkante Decke · Für wen</p>
-      <h2 id="wer-titel">Für Praktiker, nicht für CAD-Spezialisten.</h2>
-      <ul class="people">
-        <li><h3>Architekten</h3><p>Entwerfen direkt in 3D, Bauzeichnungen nach deutscher Norm und ein Kostenrahmen aus demselben Modell.</p></li>
-        <li><h3>Bauunternehmer</h3><p>Ein Haus im Kundengespräch in Minuten modellieren, Mengen und Kosten sofort sehen, Leistungsverzeichnisse je Gewerk erstellen.</p></li>
-        <li><h3>Bauträger</h3><p>Wandtypen, Baustoffe, Preise und Bauleistungen der eigenen Firma einmal anlegen und in jedem Projekt nutzen.</p></li>
-        <li><h3>Immobilienmakler</h3><p>Ein anschauliches 3D-Modell und eine erste Kostenschätzung für das Gespräch mit Interessenten, ohne CAD-Kenntnisse.</p></li>
-      </ul>
-    </div>
-  </section>
+  </main>
 
-  <section class="next" id="kontakt" aria-labelledby="weiter-titel">
-    <svg class="giant" viewBox="0 0 1219 909" aria-hidden="true"><use href="#sk"/></svg>
-    <div class="wrap">
-      <h2 id="weiter-titel">Ein Blick ins Programm.</h2>
-      <p class="prose" style="color: var(--ink);">Wie Skizzeo baulich mitdenkt, was die Auswertung zeigt und wie Sie künftig eigene Bauteile ohne Programmieren anlegen.</p>
-      <a class="btn" href="einblick.html">Zum Einblick
-        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9 H15 M10 4 L15 9 L10 14"/></svg>
-      </a>
-      <p style="margin-top: 12px;">Fragen oder Anregungen aus der Praxis? <a href="mailto:info@skizzeo.com">info@skizzeo.com</a></p>
+  <footer class="foot">
+    <p class="legal-links">
+      <span>© <span data-year>2026</span> Skizzeo</span>
+      <a href="#impressum">Impressum</a>
+      <a href="#datenschutz">Datenschutz</a>
+    </p>
+    <div class="pager">
+      <p class="count"><b id="count-nr">01</b> / <span id="count-all">11</span><span class="count-title" id="count-title">Start</span></p>
+      <button type="button" class="prev" id="prev" aria-label="Vorherige Seite"><svg aria-hidden="true"><use href="#pfeil"/></svg><span>Zurück</span></button>
+      <button type="button" class="next" id="next" aria-label="Nächste Seite"><span>Weiter</span><svg aria-hidden="true"><use href="#pfeil"/></svg></button>
     </div>
-  </section>
-</main>
+  </footer>
 
-<footer class="foot">
-  <div class="wrap">
-    <span>© <span data-year>2026</span> Skizzeo</span>
-    <nav aria-label="Rechtliches">
-      <a href="einblick.html">Einblick</a>
-      <a href="impressum.html">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-    </nav>
-  </div>
-</footer>
+</div>
 
 <script src="assets/js/site.js"></script>
 </body>
