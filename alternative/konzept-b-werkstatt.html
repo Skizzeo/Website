@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skizzeo · Konzept B „Werkstatt“</title>
+<style>
+/* Konzept B „Werkstatt“
+   Eine ruhige dunkle Tafel mit freiem Rand, darauf ein Raster aus Kacheln (Bento).
+   Jede Kachel ist ein Einstieg in ein Kapitel; alles passt auf einen Bildschirm.
+   Die Kacheln reagieren beim Überfahren (heben sich, Bild zoomt leicht, Zahlen zählen). */
+@font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 700; }
+@font-face { font-family: "Inter Tight"; src: url("assets/fonts/inter-tight-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+
+:root {
+  --desk: #0b0d10;
+  --board: #12161b;
+  --tile: #1a2028;
+  --tile-2: #222a34;
+  --line: rgba(231, 229, 222, .09);
+  --text: #e7e5de;
+  --soft: #9ea3aa;
+  --amber: #f2b33d;
+  --band: #8f63f0;
+  --paper: #f5f4ef;
+  --display: "Space Grotesk", "Inter Tight", Arial, sans-serif;
+  --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --m: clamp(14px, 2.6vmin, 40px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--desk); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+p, h1, h2, h3 { margin: 0; }
+
+.board { position: fixed; inset: var(--m); border-radius: 26px; background: var(--board);
+  border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr auto; padding: 26px 30px 22px; gap: 22px;
+  box-shadow: 0 40px 120px rgba(0,0,0,.5); }
+
+header { display: flex; align-items: center; gap: 40px; }
+.brand { display: flex; align-items: center; gap: 12px; font: 600 19px var(--display); color: var(--text); text-decoration: none; }
+.brand svg { width: 28px; }
+nav { display: flex; gap: 30px; margin-left: 30px; }
+nav a { color: var(--soft); text-decoration: none; font-size: 15px; position: relative; }
+nav a.on { color: var(--text); }
+nav a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 2px; background: var(--amber); border-radius: 2px; }
+.head-r { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.chip { font: 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--soft); border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px; display: flex; gap: 9px; align-items: center; }
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 600 15px var(--sans); padding: 13px 20px; border-radius: 12px; text-decoration: none; }
+.btn.amber { background: var(--amber); color: #1b1407; }
+.btn.line { border: 1px solid rgba(231,229,222,.22); color: var(--text); }
+
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(6, 1fr); gap: 14px; min-height: 0; }
+.tile { position: relative; border-radius: 18px; background: var(--tile); border: 1px solid var(--line); overflow: hidden; min-height: 0;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s; }
+.tile:hover { transform: translateY(-3px); border-color: rgba(242,179,61,.35); }
+.k { font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--soft); display: flex; align-items: center; gap: 10px; }
+.k b { color: var(--amber); font-weight: 400; }
+.go { position: absolute; right: 18px; top: 18px; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(231,229,222,.08); border: 1px solid var(--line); font-size: 16px; color: var(--text); }
+
+/* Kachel 1: Botschaft */
+.t-hero { grid-column: 1 / 6; grid-row: 1 / 5; background: none; border: none; padding: 34px 20px 10px 14px; display: flex; flex-direction: column; }
+.t-hero:hover { transform: none; }
+.t-hero h1 { font: 600 clamp(40px, 3.9vw, 78px)/1.0 var(--display); letter-spacing: -.035em; margin-top: 28px; }
+.t-hero h1 em { font-style: normal; color: var(--amber); }
+.t-hero .lead { margin-top: 28px; font-size: 19px; line-height: 1.55; color: #c3c3bd; max-width: 560px; }
+.t-hero .ctas { display: flex; gap: 12px; margin-top: auto; }
+
+/* Kachel 2: Programmbild */
+.t-shot { grid-column: 6 / 13; grid-row: 1 / 5; background: #0f1216; }
+.t-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; transform: scale(1.02); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.t-shot:hover img { transform: scale(1.05); }
+.t-shot .cap { position: absolute; left: 18px; bottom: 18px; right: 18px; display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+.glass { background: rgba(18,22,27,.82); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.glass h3 { font: 600 20px var(--display); letter-spacing: -.01em; margin-top: 8px; }
+.glass p { font-size: 14.5px; color: var(--soft); margin-top: 6px; max-width: 460px; line-height: 1.5; }
+.sync { display: flex; align-items: center; gap: 10px; font: 12.5px var(--mono); color: var(--text); }
+.sync span { width: 10px; height: 10px; border-radius: 3px; background: var(--amber); box-shadow: 0 0 0 4px rgba(242,179,61,.2); }
+.sync i { width: 46px; height: 1px; background: repeating-linear-gradient(90deg, var(--amber) 0 5px, transparent 5px 9px); }
+
+/* Kachel 3: Kosten live */
+.t-live { grid-column: 1 / 4; grid-row: 5 / 7; padding: 20px 22px; display: flex; flex-direction: column; }
+.t-live .what { margin-top: 18px; font-size: 15px; line-height: 1.45; color: #c3c3bd; }
+.t-live .num { font: 600 46px/1 var(--display); letter-spacing: -.03em; margin-top: auto; }
+.t-live .num small { font-size: 22px; color: var(--soft); margin-left: 4px; }
+.bars { display: flex; align-items: end; gap: 5px; height: 40px; margin-top: 14px; }
+.bars i { flex: 1; background: rgba(231,229,222,.12); border-radius: 3px; }
+.bars i.a { background: var(--amber); }
+.t-live .sub { font-size: 12.5px; color: var(--soft); margin-top: 10px; display: flex; justify-content: space-between; }
+.t-live .sub b { font: 12.5px var(--mono); color: var(--amber); font-weight: 400; }
+
+/* Kachel 4: Grundriss */
+.t-plan { grid-column: 4 / 7; grid-row: 5 / 7; background: var(--paper); }
+.t-plan img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.t-plan .label { position: absolute; left: 14px; bottom: 14px; }
+.pill { display: inline-flex; gap: 8px; align-items: center; background: #12161b; color: var(--text); border-radius: 999px; padding: 8px 13px; font-size: 13.5px; font-weight: 500; }
+.pill em { font-style: normal; color: var(--amber); font-family: var(--mono); font-size: 12px; }
+.t-plan .go { background: rgba(18,22,27,.85); }
+
+/* Kachel 5: Für wen */
+.t-who { grid-column: 7 / 10; grid-row: 5 / 7; padding: 20px 22px; display: flex; flex-direction: column; }
+.t-who ul { list-style: none; margin: auto 0 0; padding: 0; }
+.t-who li { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--line); font-size: 16px; }
+.t-who li span { color: var(--soft); font-size: 13px; }
+
+/* Kachel 6: Werkbank (Ausblick) */
+.t-bench { grid-column: 10 / 13; grid-row: 5 / 7; padding: 20px 22px; display: flex; flex-direction: column;
+  background: radial-gradient(120% 140% at 100% 0%, rgba(143,99,240,.22), transparent 55%), var(--tile); }
+.badge { align-self: flex-start; font: 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(242,179,61,.5); color: var(--amber); }
+.t-bench h3 { font: 600 22px/1.15 var(--display); margin-top: 14px; letter-spacing: -.015em; }
+.bubble { margin-top: auto; font-size: 13.5px; line-height: 1.45; color: #cfcdc6; background: rgba(231,229,222,.06); border: 1px solid var(--line); border-radius: 12px 12px 12px 4px; padding: 10px 12px; }
+.bubble b { font: 11px var(--mono); color: #b79bff; font-weight: 400; display: block; margin-bottom: 4px; letter-spacing: .06em; }
+
+footer { display: flex; align-items: center; gap: 20px; font-size: 13px; color: var(--soft); }
+footer .chain { display: flex; align-items: center; gap: 12px; font: 12.5px var(--mono); }
+footer .chain span { color: var(--text); }
+footer .chain i { color: var(--amber); font-style: normal; }
+footer .right { margin-left: auto; display: flex; gap: 22px; }
+footer a { color: var(--soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="board">
+  <header>
+    <a class="brand" href="#start">
+      <svg viewBox="0 0 1219 909" aria-hidden="true"><path fill="currentColor" d="M0 237.5 C0 96.5 103.9 0 259.6 0 L586 0 L586 434.7 L935 0 L1190 0 L840 427.5 L1219 909 L956.5 909 L587.3 452 C518.5 366.9 419 287 339 287 L0 287 Z M0 390.6 L0 909 L445.5 909 C532.1 909 602.2 836.9 602.2 748 C602.2 659.1 532.1 587 445.5 587 L281.5 587 C157.1 587 38.5 480.6 0 390.6 Z"/></svg>
+      Skizzeo
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <a class="on" href="#start">Start</a><a href="#idee">Idee</a><a href="#programm">Programm</a><a href="#fuer-wen">Für wen</a><a href="#werkbank">Werkbank</a><a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="head-r">
+      <span class="chip"><i></i>In Entwicklung · Windows</span>
+      <a class="btn amber" href="#kontakt">Informiert bleiben</a>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="tile t-hero">
+      <p class="k"><b>●</b> BIM für Ein- und Mehrfamilienhäuser</p>
+      <h1>Haus zeichnen.<br><em>Mengen, Kosten und LV</em> sind schon da.</h1>
+      <p class="lead">Skizzeo ist der 3D-Gebäudemodellierer für den Wohnungsbau, gedacht von einem Bauplaner. Ohne Parameterflut, ohne Schulungsmarathon, mit voller BIM-Tiefe im Hintergrund.</p>
+      <div class="ctas">
+        <a class="btn amber" href="#programm">Programm ansehen →</a>
+        <a class="btn line" href="#idee">Die Idee</a>
+      </div>
+    </section>
+
+    <section class="tile t-shot">
+      <img src="assets/img/modell-und-mengen.png" alt="Skizzeo mit 3D-Modell links und Mengenermittlung rechts; die angefahrene Wand leuchtet in beiden Fenstern.">
+      <div class="cap">
+        <div class="glass">
+          <p class="k"><b>01</b> Modell und Mengen</p>
+          <h3>Gleichzeitig sichtbar, in beide Richtungen gekoppelt.</h3>
+          <p>Zeile anfahren, und die Wand leuchtet im Modell. Wand anklicken, und ihre Zeile ist markiert.</p>
+        </div>
+        <div class="glass sync"><span></span><i></i>AW-003<i></i><span></span></div>
+      </div>
+    </section>
+
+    <section class="tile t-live">
+      <p class="k"><b>02</b> Kosten live</p>
+      <span class="go">↗</span>
+      <p class="what">Kostenschätzung netto<br>nach DIN 276, beim Zeichnen</p>
+      <p class="num" data-count="46878">46.878<small>€</small></p>
+      <div class="bars"><i style="height:38%"></i><i style="height:46%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:55%"></i><i style="height:66%"></i><i style="height:72%"></i><i class="a" style="height:84%"></i></div>
+      <p class="sub">Jede Wand ändert die Schätzung sofort <b>Beispiel</b></p>
+    </section>
+
+    <section class="tile t-plan">
+      <img src="assets/img/schnittdetail.png" alt="Schnittdetail mit mehrschaliger Wand, Dachterrasse und Attika, normgerecht schraffiert.">
+      <span class="go">↗</span>
+      <div class="label"><span class="pill"><em>03</em> Denkt wie ein Bauplaner</span></div>
+    </section>
+
+    <section class="tile t-who">
+      <p class="k"><b>04</b> Für wen</p>
+      <span class="go">↗</span>
+      <ul>
+        <li>Architekten <span>Wohnungsbau</span></li>
+        <li>Bauunternehmer <span>Massivhaus, GU</span></li>
+        <li>Bauträger <span>Firmenstandard</span></li>
+        <li>Immobilienmakler <span>Kundengespräch</span></li>
+      </ul>
+    </section>
+
+    <section class="tile t-bench">
+      <span class="badge">In Entwicklung</span>
+      <h3>Eigene Bauteile.<br>Ohne Programmieren.</h3>
+      <p class="bubble"><b>IHRE BESCHREIBUNG</b>Stahlbetonstütze 24/24, Fuß auf der Rohdecke, Kopf unter der Decke.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Skizzeo</span>
+    <span class="chain"><span>Bauteil</span><i>→</i><span>Schicht</span><i>→</i><span>Baustoff</span><i>→</i><span>Bauleistung</span><i>→</i><span>Leistungsverzeichnis</span></span>
+    <span class="right"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></span>
+  </footer>
+</div>
+<script>
+// Zahl zählt beim Laden hoch (im Standbild sofort fertig)
+const el = document.querySelector('[data-count]');
+if (!new URLSearchParams(location.search).has('still')) {
+  const end = +el.dataset.count, t0 = performance.now();
+  const step = t => { const k = Math.min(1, (t - t0) / 1400), e = 1 - Math.pow(1 - k, 3);
+    el.firstChild.nodeValue = Math.round(end * e).toLocaleString('de-DE'); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+</script>
+</body>
+</html>

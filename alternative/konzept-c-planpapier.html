@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skizzeo · Konzept C „Planpapier“</title>
+<style>
+/* Konzept C „Planpapier“
+   Die Seite ist das Programm im Kleinen: links altweißes Planpapier mit einem echten,
+   normgerecht schraffierten Grundriss, rechts das dunkle Auswertungsfenster. Eine
+   orangefarbene Linie verbindet die markierte Wand mit ihrer Zeile. Der Trenner in der
+   Mitte lässt sich ziehen. Unten ein Schriftfeld wie auf dem Plan, darin der Seitenwechsel. */
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: "Inter Tight"; src: url("assets/fonts/inter-tight-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
+
+:root {
+  --paper: #f3f1ea;
+  --paper-line: rgba(20, 22, 26, .05);
+  --ink: #111316;
+  --ink-soft: #55585e;
+  --night: #161b21;
+  --panel: #1f252d;
+  --panel-2: #2a323d;
+  --line: rgba(231, 229, 222, .1);
+  --text: #e7e5de;
+  --soft: #a0a5ac;
+  --amber: #f2b33d;
+  --band: #8f63f0;
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --split: 61%;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; overflow: hidden; font-family: var(--sans); color: var(--ink); background: var(--night); -webkit-font-smoothing: antialiased; }
+p, h1, h2, h3 { margin: 0; }
+
+.paper { position: fixed; inset: 0 auto 0 0; width: var(--split); background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 28px 28px; background-position: -1px -1px; }
+.night { position: fixed; inset: 0 0 0 auto; left: var(--split); background:
+  radial-gradient(90% 60% at 80% 0%, rgba(242,179,61,.07), transparent 60%), linear-gradient(180deg, #1b2129, #12161b); color: var(--text); }
+
+/* Kopfzeile über beide Hälften */
+header { position: fixed; top: 0; left: 0; right: 0; height: 96px; display: flex; align-items: center; padding: 0 64px; z-index: 6; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 19px; color: var(--ink); text-decoration: none; }
+.brand svg { width: 29px; }
+nav { display: flex; gap: 32px; margin-left: 64px; }
+nav a { color: var(--ink-soft); text-decoration: none; font-size: 15px; }
+nav a.on { color: var(--ink); font-weight: 600; }
+.head-r { position: absolute; right: 56px; display: flex; gap: 18px; align-items: center; }
+.status { font: 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--soft); display: flex; align-items: center; gap: 10px; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px rgba(242,179,61,.18); }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 600 15px var(--sans); padding: 14px 22px; border-radius: 4px; text-decoration: none; }
+.btn.ink { background: var(--ink); color: var(--paper); }
+.btn.ghost { border: 1px solid rgba(17,19,22,.3); color: var(--ink); }
+.btn.amber { background: var(--amber); color: #1b1407; }
+
+/* Text auf dem Papier */
+.intro { position: fixed; left: 64px; top: 196px; width: 600px; z-index: 3; }
+.eyebrow { font: 12.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); display: flex; gap: 14px; align-items: center; }
+.eyebrow::before { content: "A"; display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1.5px solid var(--ink); border-radius: 50%; font-size: 11px; color: var(--ink); letter-spacing: 0; }
+h1 { font: 400 clamp(52px, 5.4vw, 108px)/.95 var(--serif); letter-spacing: -.02em; margin-top: 34px; }
+h1 em { font-style: italic; }
+h1 .u { background: linear-gradient(transparent 78%, rgba(242,179,61,.55) 78%, rgba(242,179,61,.55) 92%, transparent 92%); }
+.lead { margin-top: 34px; font-size: 19px; line-height: 1.55; color: #33363b; max-width: 520px; }
+.ctas { display: flex; gap: 12px; margin-top: 40px; }
+
+/* Grundriss */
+svg#plan { position: fixed; z-index: 2; overflow: visible; }
+.views { position: fixed; z-index: 4; display: flex; gap: 2px; padding: 3px; border-radius: 6px; background: var(--panel); }
+.views span { font-size: 13px; padding: 7px 13px; border-radius: 4px; color: var(--soft); font-weight: 500; }
+.views span.on { background: var(--amber); color: #1b1407; font-weight: 600; }
+.note-plan { position: fixed; z-index: 4; font: 12px var(--mono); color: var(--ink-soft); }
+
+/* Schriftfeld mit Seitenwechsel */
+.titleblock { position: fixed; left: 64px; bottom: 44px; z-index: 4; display: grid; grid-template-columns: 220px 230px 150px 126px; border: 1.5px solid var(--ink); background: var(--paper); }
+.titleblock > div { padding: 10px 14px; border-left: 1px solid var(--ink); }
+.titleblock > div:first-child { border-left: none; }
+.titleblock small { display: block; font: 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 3px; }
+.titleblock b { font-size: 15px; font-weight: 600; }
+.titleblock .pg { display: flex; align-items: center; justify-content: space-between; padding: 0; }
+.titleblock .pg button { flex: 1; height: 100%; border: 0; background: none; font-size: 17px; cursor: pointer; color: var(--ink); }
+.titleblock .pg button + button { border-left: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+
+/* Auswertungsfenster rechts */
+.split-handle { position: fixed; top: 0; bottom: 0; left: var(--split); width: 0; z-index: 5; }
+.split-handle i { position: absolute; top: 86%; left: -22px; width: 44px; height: 44px; border-radius: 50%; background: var(--amber); display: grid; place-items: center;
+  font-size: 16px; font-style: normal; color: #1b1407; box-shadow: 0 0 0 8px rgba(242,179,61,.18); cursor: ew-resize; transform: translateY(-50%); }
+.auswertung { position: fixed; z-index: 3; right: 56px; top: 132px; bottom: 44px; left: calc(var(--split) + 56px); display: flex; flex-direction: column; color: var(--text); }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.card { border-radius: 10px; padding: 14px 16px; background: rgba(231,229,222,.04); border: 1px solid var(--line); }
+.card.on { background: var(--paper); color: var(--ink); border-color: transparent; }
+.card small { display: block; font-size: 12.5px; color: var(--soft); margin-top: 4px; }
+.card.on small { color: var(--ink-soft); }
+.card b { font-size: 16px; }
+.card .ic { font: 12px var(--mono); color: var(--amber); margin-right: 6px; }
+.card.on .ic { color: #b07a12; }
+.title { display: flex; justify-content: space-between; align-items: end; margin: 36px 0 14px; }
+.title h2 { font: 400 40px/1 var(--serif); letter-spacing: -.01em; }
+.title span { font: 12px var(--mono); color: var(--soft); }
+.table { font-size: 14.5px; }
+.table .h { display: grid; grid-template-columns: 1fr 90px 92px 92px; padding: 0 0 8px; font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #7f858c; border-bottom: 1px solid var(--line); }
+.table .r { display: grid; grid-template-columns: 1fr 90px 92px 92px; padding: 8.5px 0; border-bottom: 1px solid rgba(231,229,222,.05); }
+.table .r > span:not(:first-child), .table .h > span:not(:first-child) { text-align: right; }
+.table .r > span:not(:first-child) { font: 13px var(--mono); color: #cfcdc6; }
+.table .g { font-weight: 600; padding-top: 14px; color: var(--text); }
+.table .r.sub > span:first-child { padding-left: 18px; color: #c9c8c2; }
+.table .r.sub > span:first-child em { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--soft); margin-right: 10px; }
+.table .r.hot { background: rgba(242,179,61,.14); margin: 0 -12px; padding-left: 12px; padding-right: 12px; border-radius: 6px; }
+.table .r.hot > span:first-child em { color: var(--amber); }
+.cost { margin-top: auto; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: end; padding: 20px 0 18px; border-top: 1px solid var(--line); }
+.cost small { display: block; font-size: 12.5px; color: var(--soft); margin-bottom: 8px; }
+.cost b { font: 400 64px/1 var(--serif); letter-spacing: -.01em; }
+.cost span { font: 12.5px/1.6 var(--mono); color: var(--soft); text-align: right; }
+.cost em { font-style: normal; color: var(--amber); font-size: 15px; }
+.totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.totals div { border-radius: 10px; padding: 14px 16px; background: rgba(231,229,222,.05); border: 1px solid var(--line); }
+.totals small { display: block; font-size: 12px; color: var(--soft); }
+.totals b { font: 600 24px var(--sans); letter-spacing: -.02em; display: block; margin-top: 6px; }
+.fine { margin-top: 12px; font-size: 11.5px; color: #7f858c; display: flex; justify-content: space-between; }
+
+svg#wire { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; overflow: visible; }
+</style>
+</head>
+<body>
+<div class="paper"></div>
+<div class="night"></div>
+
+<header>
+  <a class="brand" href="#start">
+    <svg viewBox="0 0 1219 909" aria-hidden="true"><path fill="currentColor" d="M0 237.5 C0 96.5 103.9 0 259.6 0 L586 0 L586 434.7 L935 0 L1190 0 L840 427.5 L1219 909 L956.5 909 L587.3 452 C518.5 366.9 419 287 339 287 L0 287 Z M0 390.6 L0 909 L445.5 909 C532.1 909 602.2 836.9 602.2 748 C602.2 659.1 532.1 587 445.5 587 L281.5 587 C157.1 587 38.5 480.6 0 390.6 Z"/></svg>
+    Skizzeo
+  </a>
+  <nav aria-label="Hauptnavigation">
+    <a class="on" href="#start">Start</a><a href="#idee">Idee</a><a href="#programm">Programm</a><a href="#fuer-wen">Für wen</a><a href="#werkbank">Werkbank</a><a href="#kontakt">Kontakt</a>
+  </nav>
+  <div class="head-r">
+    <span class="status"><i></i>In Entwicklung</span>
+    <a class="btn amber" href="#kontakt">Informiert bleiben</a>
+  </div>
+</header>
+
+<main class="intro">
+  <p class="eyebrow">Ein Modell · jede Ansicht bearbeitbar</p>
+  <h1>Planen, wie ein <em class="u">Bauplaner</em> denkt.</h1>
+  <p class="lead">Grundriss, Schnitt, Ansicht oder 3D: Sie arbeiten überall direkt am Bauteil. Mengen, Kostenschätzung und Leistungsverzeichnis laufen daneben mit, in Echtzeit und in beide Richtungen gekoppelt.</p>
+  <div class="ctas">
+    <a class="btn ink" href="#programm">Programm ansehen →</a>
+    <a class="btn ghost" href="#idee">Die Idee</a>
+  </div>
+</main>
+
+<svg id="plan" aria-label="Grundriss Erdgeschoss eines L-förmigen Hauses; die rechte Außenwand ist markiert."></svg>
+<div class="views" id="views"><span>3D</span><span class="on">Grundriss</span><span>Schnitt</span><span>Ansicht</span></div>
+
+<div class="titleblock" aria-label="Seitenwechsel">
+  <div><small>Blatt</small><b>01 / 05 · Start</b></div>
+  <div><small>Nächstes Blatt</small><b>Jede Ansicht bearbeitbar</b></div>
+  <div><small>Stand</small><b>10 / 2026</b></div>
+  <div class="pg"><button aria-label="Zurück">←</button><button aria-label="Weiter">→</button></div>
+</div>
+
+<div class="split-handle"><i aria-hidden="true">⇆</i></div>
+
+<aside class="auswertung" aria-label="Mengen, Kosten und AVA, Beispiel">
+  <div class="cards">
+    <div class="card on"><b><span class="ic">▤</span>Mengen</b><small>16 Bauteile · 2 Geschosse</small></div>
+    <div class="card"><b><span class="ic">€</span>Kosten</b><small>nach DIN 276 · Gewerk</small></div>
+    <div class="card"><b><span class="ic">≡</span>AVA</b><small>Leistungsverzeichnis je Los</small></div>
+  </div>
+  <div class="title"><h2>Mengenermittlung</h2><span>Gebäude 1 · Erdgeschoss</span></div>
+  <div class="table">
+    <div class="h"><span>Bauteil</span><span>Länge</span><span>Fläche</span><span>Volumen</span></div>
+    <div class="r g"><span>Fundament</span><span></span><span></span><span></span></div>
+    <div class="r sub"><span><em>FS-001</em>Frostschürze</span><span>37,00 m</span><span></span><span>8,880 m³</span></div>
+    <div class="r sub"><span><em>SP-001</em>Sohlplatte 22 cm</span><span></span><span>78,00 m²</span><span>17,160 m³</span></div>
+    <div class="r g"><span>Außenwände AW 31,5</span><span>37,00 m</span><span></span><span>18,486 m³</span></div>
+    <div class="r sub"><span><em>AW-001</em>Nord</span><span>8,00 m</span><span>22,84 m²</span><span>3,997 m³</span></div>
+    <div class="r sub hot" id="hot"><span><em>AW-002</em>Ost · markiert</span><span>10,50 m</span><span>29,98 m²</span><span>5,246 m³</span></div>
+    <div class="r sub"><span><em>AW-003</em>Süd</span><span>5,00 m</span><span>14,28 m²</span><span>2,498 m³</span></div>
+    <div class="r sub"><span><em>AW-004 … 006</em>Rücksprung, West</span><span>13,50 m</span><span>38,54 m²</span><span>6,745 m³</span></div>
+    <div class="r g"><span>Innenwände IW 17,5</span><span>7,37 m</span><span></span><span>3,398 m³</span></div>
+  </div>
+  <div class="cost">
+    <div><small>Kostenschätzung netto · Erdgeschoss · KG 300</small><b>46.878 €</b></div>
+    <span>AW-002 um 0,50 m nach Osten<br><em>+ 1.214 €</em></span>
+  </div>
+  <div class="totals">
+    <div><small>Stahlbeton</small><b>26,04 m³</b></div>
+    <div><small>Gasbeton</small><b>21,88 m³</b></div>
+    <div><small>Dämmung WDVS</small><b>105,64 m²</b></div>
+  </div>
+  <p class="fine"><span>Beispielwerte, Zeile anfahren zeigt das Bauteil im Grundriss</span><span>LIVE ●</span></p>
+</aside>
+
+<svg id="wire"></svg>
+
+<script>
+// Grundriss in Metern, Ursprung oben links, y nach unten (Norden oben)
+const OUT = [[0,0],[8,0],[8,10.5],[3,10.5],[3,8.5],[0,8.5]];
+const WDVS = 0.14, MW = 0.175, S = 47;          // Schichtdicken, Maßstab Pixel je Meter
+const NS = 'http://www.w3.org/2000/svg';
+const plan = document.getElementById('plan');
+
+// Rechtwinkliges Polygon nach innen versetzen (Umlauf im Uhrzeigersinn, Bildschirmkoordinaten)
+function inset(poly, t) {
+  const n = poly.length, out = [];
+  for (let i = 0; i < n; i++) {
+    const p = poly[(i - 1 + n) % n], c = poly[i], q = poly[(i + 1) % n];
+    const e1 = [c[0] - p[0], c[1] - p[1]], e2 = [q[0] - c[0], q[1] - c[1]];
+    const n1 = norm([-e1[1], e1[0]]), n2 = norm([-e2[1], e2[0]]);
+    out.push([c[0] + t * (n1[0] + n2[0]), c[1] + t * (n1[1] + n2[1])]);
+  }
+  return out;
+}
+function norm(v) { const l = Math.hypot(v[0], v[1]); return [v[0] / l, v[1] / l]; }
+const d = poly => 'M' + poly.map(p => (p[0] * S).toFixed(2) + ' ' + (p[1] * S).toFixed(2)).join(' L') + ' Z';
+function el(tag, attrs, parent = plan) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+
+const P1 = inset(OUT, WDVS), P2 = inset(OUT, WDVS + MW);
+const W = 8 * S, H = 10.5 * S, PAD = 44;
+
+function layout() {
+  const vw = innerWidth, vh = innerHeight, split = vw * .61;
+  const x = Math.min(split - W - 118, split * .66), y = Math.max(150, (vh - H) / 2 - 10);
+  Object.assign(plan.style, { left: x + 'px', top: y + 'px' });
+  plan.setAttribute('width', W); plan.setAttribute('height', H);
+  plan.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const v = document.getElementById('views');
+  Object.assign(v.style, { left: (x + W - 296) + 'px', top: (y - 70) + 'px' });
+  return { x, y };
+}
+
+function draw() {
+  plan.innerHTML = '';
+  const defs = el('defs', {});
+  // Mauerwerk: enge Diagonalschraffur
+  const pm = el('pattern', { id: 'mw', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+  el('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#111316', 'stroke-width': 1 }, pm);
+  // Dämmung: Zickzack
+  const pd = el('pattern', { id: 'wd', width: 8, height: 8, patternUnits: 'userSpaceOnUse' }, defs);
+  el('path', { d: 'M0 0 L4 8 L8 0', fill: 'none', stroke: '#111316', 'stroke-width': .9 }, pd);
+  // Beton (Sohlplatte unter dem Grundriss angedeutet)
+  el('path', { d: d(inset(OUT, -0.12)), fill: 'none', stroke: '#111316', 'stroke-width': .8, 'stroke-dasharray': '7 5', opacity: .55 });
+  el('path', { d: d(OUT) + ' ' + d(P1), 'fill-rule': 'evenodd', fill: 'url(#wd)' });
+  el('path', { d: d(P1) + ' ' + d(P2), 'fill-rule': 'evenodd', fill: 'url(#mw)' });
+  el('path', { d: d(OUT), fill: 'none', stroke: '#111316', 'stroke-width': 1.3 });
+  el('path', { d: d(P1), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
+  el('path', { d: d(P2), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
+  el('path', { d: d(P2), fill: '#fbfaf6' });
+  el('path', { d: d(P2), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
+  // Innenwände
+  const iw = (x0, y0, x1, y1) => { const r = el('rect', { x: x0 * S, y: y0 * S, width: (x1 - x0) * S, height: (y1 - y0) * S, fill: 'url(#mw)', stroke: '#111316', 'stroke-width': 2.2 }); };
+  iw(0.315, 4.6, 5.2, 4.6 + 0.175);
+  iw(5.2, 0.315, 5.2 + 0.175, 4.775);
+  iw(3.0, 4.775, 3.175, 8.185);
+  // Schnittlinie A–A
+  const yA = 2.6 * S;
+  el('line', { x1: -PAD, y1: yA, x2: W + PAD, y2: yA, stroke: '#111316', 'stroke-width': 1, 'stroke-dasharray': '22 5 3 5' });
+  [[-PAD, -1], [W + PAD, 1]].forEach(([xx, s]) => {
+    el('path', { d: `M${xx} ${yA} L${xx} ${yA - 20}`, stroke: '#111316', 'stroke-width': 2 });
+    el('path', { d: `M${xx - 5} ${yA - 12} L${xx} ${yA - 22} L${xx + 5} ${yA - 12}`, fill: '#111316' });
+    el('text', { x: xx + 10 * s - (s < 0 ? 8 : 0), y: yA - 4, 'font-family': 'JetBrains Mono', 'font-size': 15, 'font-weight': 500, fill: '#111316' }).textContent = 'A';
+  });
+  // markierte Wand AW-002 (Osten, x = 8)
+  const t = WDVS + MW;
+  el('rect', { x: (8 - t) * S, y: 0, width: t * S, height: 10.5 * S, fill: 'rgba(242,179,61,.42)', stroke: '#f2b33d', 'stroke-width': 3 });
+  // Gummiband am Wandfuß
+  el('line', { x1: 8 * S + 9, y1: 6, x2: 8 * S + 9, y2: 10.5 * S - 6, stroke: '#8f63f0', 'stroke-width': 5, 'stroke-linecap': 'round' });
+  el('circle', { cx: 8 * S + 9, cy: 7.2 * S, r: 9, fill: '#8f63f0', stroke: '#f3f1ea', 'stroke-width': 3 });
+  // Raumbezeichnungen leise, wie Bleistift
+  const lab = (x, y, s) => { el('text', { x: x * S, y: y * S, 'font-family': 'JetBrains Mono', 'font-size': 12, fill: '#55585e', 'letter-spacing': '.06em' }).textContent = s; };
+  lab(0.9, 2.2, 'WOHNEN');
+  lab(5.9, 2.2, 'KÜCHE');
+  lab(4.0, 6.6, 'ESSEN');
+  lab(0.9, 6.6, 'FLUR');
+  el('text', { x: 0, y: H + 34, 'font-family': 'JetBrains Mono', 'font-size': 12.5, fill: '#55585e', 'letter-spacing': '.08em' }).textContent = 'GRUNDRISS EG  ·  ±0,00';
+}
+
+// Linie von der markierten Wand zur Zeile im Auswertungsfenster
+function wire(pos) {
+  const svg = document.getElementById('wire'); svg.innerHTML = '';
+  const row = document.getElementById('hot').getBoundingClientRect();
+  const x1 = pos.x + 8 * S + 18, y1 = pos.y + 4.4 * S;
+  const x2 = row.left - 14, y2 = row.top + row.height / 2;
+  const mx = (x1 + x2) / 2;
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', `M${x1} ${y1} C${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+  Object.entries({ fill: 'none', stroke: '#f2b33d', 'stroke-width': 2, 'stroke-dasharray': '6 6' }).forEach(([k, v]) => p.setAttribute(k, v));
+  svg.appendChild(p);
+  [[x1, y1], [x2, y2]].forEach(([cx, cy]) => {
+    const c = document.createElementNS(NS, 'circle');
+    Object.entries({ cx, cy, r: 6, fill: '#f2b33d', stroke: 'rgba(242,179,61,.3)', 'stroke-width': 8 }).forEach(([k, v]) => c.setAttribute(k, v));
+    svg.appendChild(c);
+  });
+}
+
+function render() { const pos = layout(); draw(); wire(pos); }
+document.fonts.ready.then(render);
+addEventListener('resize', render);
+</script>
+</body>
+</html>
