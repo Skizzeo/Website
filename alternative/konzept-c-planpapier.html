@@ -63,10 +63,10 @@ nav a.on { color: var(--ink); font-weight: 600; }
 .btn.amber { background: var(--amber); color: #1b1407; }
 
 /* Text auf dem Papier */
-.intro { position: fixed; left: 64px; top: 196px; width: 600px; z-index: 3; }
+.intro { position: fixed; left: 64px; top: 196px; width: 560px; z-index: 3; }
 .eyebrow { font: 12.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); display: flex; gap: 14px; align-items: center; }
 .eyebrow::before { content: "A"; display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1.5px solid var(--ink); border-radius: 50%; font-size: 11px; color: var(--ink); letter-spacing: 0; }
-h1 { font: 400 clamp(52px, 5.4vw, 108px)/.95 var(--serif); letter-spacing: -.02em; margin-top: 34px; }
+h1 { font: 400 clamp(50px, 5.1vw, 100px)/.95 var(--serif); letter-spacing: -.02em; margin-top: 34px; }
 h1 em { font-style: italic; }
 h1 .u { background: linear-gradient(transparent 78%, rgba(242,179,61,.55) 78%, rgba(242,179,61,.55) 92%, transparent 92%); }
 .lead { margin-top: 34px; font-size: 19px; line-height: 1.55; color: #33363b; max-width: 520px; }
@@ -102,7 +102,14 @@ svg#plan { position: fixed; z-index: 2; overflow: visible; }
 .card b { font-size: 16px; }
 .card .ic { font: 12px var(--mono); color: var(--amber); margin-right: 6px; }
 .card.on .ic { color: #b07a12; }
-.title { display: flex; justify-content: space-between; align-items: end; margin: 36px 0 14px; }
+.title { display: flex; justify-content: space-between; align-items: end; margin: 30px 0 12px; }
+.tools { display: flex; justify-content: space-between; margin-bottom: 12px; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 7px; background: rgba(231,229,222,.05); border: 1px solid var(--line); }
+.seg i { font-style: normal; font-size: 12.5px; padding: 5px 10px; border-radius: 5px; color: var(--soft); }
+.seg i.on { background: var(--panel-2); color: var(--text); font-weight: 600; }
+.calc { display: grid; grid-template-columns: 1fr 120px 92px; gap: 3px 0; padding: 8px 0 10px 30px; font: 12px var(--mono); color: #9aa0a6; border-bottom: 1px solid rgba(231,229,222,.05); }
+.calc span:nth-child(3n) { text-align: right; color: #cfcdc6; }
+.calc span:nth-child(3n+2) { text-align: right; padding-right: 14px; }
 .title h2 { font: 400 40px/1 var(--serif); letter-spacing: -.01em; }
 .title span { font: 12px var(--mono); color: var(--soft); }
 .table { font-size: 14.5px; }
@@ -150,14 +157,14 @@ svg#wire { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 4; poi
 <main class="intro">
   <p class="eyebrow">Ein Modell · jede Ansicht bearbeitbar</p>
   <h1>Planen, wie ein <em class="u">Bauplaner</em> denkt.</h1>
-  <p class="lead">Grundriss, Schnitt, Ansicht oder 3D: Sie arbeiten überall direkt am Bauteil. Mengen, Kostenschätzung und Leistungsverzeichnis laufen daneben mit, in Echtzeit und in beide Richtungen gekoppelt.</p>
+  <p class="lead">Grundriss, Schnitt, Ansicht oder 3D: Sie arbeiten überall direkt am Bauteil. Räume, Türaufschläge und Maßketten entstehen von selbst. Mengen, Kostenschätzung und Leistungsverzeichnis laufen daneben mit, in beide Richtungen gekoppelt.</p>
   <div class="ctas">
     <a class="btn ink" href="#programm">Programm ansehen →</a>
     <a class="btn ghost" href="#idee">Die Idee</a>
   </div>
 </main>
 
-<svg id="plan" aria-label="Grundriss Erdgeschoss eines L-förmigen Hauses; die rechte Außenwand ist markiert."></svg>
+<svg id="plan" aria-label="Grundriss Erdgeschoss eines L-förmigen Hauses mit Räumen, Fenstern, Türen und Maßketten; die rechte Außenwand ist markiert."></svg>
 <div class="views" id="views"><span>3D</span><span class="on">Grundriss</span><span>Schnitt</span><span>Ansicht</span></div>
 
 <div class="titleblock" aria-label="Seitenwechsel">
@@ -171,33 +178,37 @@ svg#wire { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 4; poi
 
 <aside class="auswertung" aria-label="Mengen, Kosten und AVA, Beispiel">
   <div class="cards">
-    <div class="card on"><b><span class="ic">▤</span>Mengen</b><small>16 Bauteile · 2 Geschosse</small></div>
+    <div class="card on"><b><span class="ic">▤</span>Mengen</b><small>16 Bauteile · 4 Räume</small></div>
     <div class="card"><b><span class="ic">€</span>Kosten</b><small>nach DIN 276 · Gewerk</small></div>
-    <div class="card"><b><span class="ic">≡</span>AVA</b><small>Leistungsverzeichnis je Los</small></div>
+    <div class="card"><b><span class="ic">≡</span>AVA</b><small>LV je Los · mit Bauteil verknüpft</small></div>
   </div>
   <div class="title"><h2>Mengenermittlung</h2><span>Gebäude 1 · Erdgeschoss</span></div>
+  <div class="tools"><span class="seg"><i class="on">Gewerk</i><i>Geschoss</i><i>Bauteil</i></span><span class="seg"><i class="on">VOB/C</i><i>Bestellung</i></span></div>
   <div class="table">
     <div class="h"><span>Bauteil</span><span>Länge</span><span>Fläche</span><span>Volumen</span></div>
-    <div class="r g"><span>Fundament</span><span></span><span></span><span></span></div>
-    <div class="r sub"><span><em>FS-001</em>Frostschürze</span><span>37,00 m</span><span></span><span>8,880 m³</span></div>
-    <div class="r sub"><span><em>SP-001</em>Sohlplatte 22 cm</span><span></span><span>78,00 m²</span><span>17,160 m³</span></div>
-    <div class="r g"><span>Außenwände AW 31,5</span><span>37,00 m</span><span></span><span>18,486 m³</span></div>
-    <div class="r sub"><span><em>AW-001</em>Nord</span><span>8,00 m</span><span>22,84 m²</span><span>3,997 m³</span></div>
-    <div class="r sub hot" id="hot"><span><em>AW-002</em>Ost · markiert</span><span>10,50 m</span><span>29,98 m²</span><span>5,246 m³</span></div>
-    <div class="r sub"><span><em>AW-003</em>Süd</span><span>5,00 m</span><span>14,28 m²</span><span>2,498 m³</span></div>
+    <div class="r g"><span>Mauerarbeiten AW 31,5</span><span>37,00 m</span><span>97,30 m²</span><span>17,028 m³</span></div>
+    <div class="r sub"><span><em>AW-001</em>Nord</span><span>8,00 m</span><span>20,06 m²</span><span>3,510 m³</span></div>
+    <div class="r sub hot" id="hot"><span><em>AW-002</em>Ost · markiert</span><span>10,50 m</span><span>27,20 m²</span><span>4,760 m³</span></div>
+    <div class="calc">
+      <span>Länge × Höhe</span><span>10,50 × 2,855</span><span>29,98 m²</span>
+      <span>− Fenster, über 2,5 m²</span><span>2,01 × 1,385</span><span>−2,78 m²</span>
+      <span>Fenster, übermessen</span><span>1,26 × 1,385</span><span>±0,00</span>
+    </div>
+    <div class="r sub"><span><em>AW-003</em>Süd</span><span>5,00 m</span><span>11,50 m²</span><span>2,012 m³</span></div>
     <div class="r sub"><span><em>AW-004 … 006</em>Rücksprung, West</span><span>13,50 m</span><span>38,54 m²</span><span>6,745 m³</span></div>
-    <div class="r g"><span>Innenwände IW 17,5</span><span>7,37 m</span><span></span><span>3,398 m³</span></div>
+    <div class="r g"><span>Laibungen, von selbst</span><span>31,59 m</span><span>7 Stk</span><span></span></div>
+    <div class="r g"><span>Räume · Bodenbelag</span><span></span><span>64,11 m²</span><span></span></div>
   </div>
   <div class="cost">
-    <div><small>Kostenschätzung netto · Erdgeschoss · KG 300</small><b>46.878 €</b></div>
+    <div><small>Kostenschätzung netto · EG · mit Baustelle und Erdarbeiten</small><b>58.240 €</b></div>
     <span>AW-002 um 0,50 m nach Osten<br><em>+ 1.214 €</em></span>
   </div>
   <div class="totals">
     <div><small>Stahlbeton</small><b>26,04 m³</b></div>
-    <div><small>Gasbeton</small><b>21,88 m³</b></div>
-    <div><small>Dämmung WDVS</small><b>105,64 m²</b></div>
+    <div><small>Gasbeton</small><b>17,03 m³</b></div>
+    <div><small>Raumfläche</small><b>64,11 m²</b></div>
   </div>
-  <p class="fine"><span>Beispielwerte, Zeile anfahren zeigt das Bauteil im Grundriss</span><span>LIVE ●</span></p>
+  <p class="fine"><span>Beispielwerte · Zeile anfahren zeigt das Bauteil im Grundriss</span><span>LIVE ●</span></p>
 </aside>
 
 <svg id="wire"></svg>
@@ -205,8 +216,9 @@ svg#wire { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 4; poi
 <script>
 // Grundriss in Metern, Ursprung oben links, y nach unten (Norden oben)
 const OUT = [[0,0],[8,0],[8,10.5],[3,10.5],[3,8.5],[0,8.5]];
-const WDVS = 0.14, MW = 0.175, S = 47;          // Schichtdicken, Maßstab Pixel je Meter
+const WDVS = 0.14, MW = 0.175, T = WDVS + MW, S = 44;   // Schichtdicken, Maßstab Pixel je Meter
 const NS = 'http://www.w3.org/2000/svg';
+const INK = '#111316', ROOM = '#fbfaf6';
 const plan = document.getElementById('plan');
 
 // Rechtwinkliges Polygon nach innen versetzen (Umlauf im Uhrzeigersinn, Bildschirmkoordinaten)
@@ -214,8 +226,7 @@ function inset(poly, t) {
   const n = poly.length, out = [];
   for (let i = 0; i < n; i++) {
     const p = poly[(i - 1 + n) % n], c = poly[i], q = poly[(i + 1) % n];
-    const e1 = [c[0] - p[0], c[1] - p[1]], e2 = [q[0] - c[0], q[1] - c[1]];
-    const n1 = norm([-e1[1], e1[0]]), n2 = norm([-e2[1], e2[0]]);
+    const n1 = norm([-(c[1] - p[1]), c[0] - p[0]]), n2 = norm([-(q[1] - c[1]), q[0] - c[0]]);
     out.push([c[0] + t * (n1[0] + n2[0]), c[1] + t * (n1[1] + n2[1])]);
   }
   return out;
@@ -223,65 +234,145 @@ function inset(poly, t) {
 function norm(v) { const l = Math.hypot(v[0], v[1]); return [v[0] / l, v[1] / l]; }
 const d = poly => 'M' + poly.map(p => (p[0] * S).toFixed(2) + ' ' + (p[1] * S).toFixed(2)).join(' L') + ' Z';
 function el(tag, attrs, parent = plan) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+const fmt = v => { const s = v.toFixed(3).replace(/0$/, ''); const [i, f] = s.split('.'); return f.length === 3 ? `${i},${f.slice(0, 2)}${'⁰¹²³⁴⁵⁶⁷⁸⁹'[+f[2]]}` : `${i},${f.padEnd(2, '0')}`; };
 
-const P1 = inset(OUT, WDVS), P2 = inset(OUT, WDVS + MW);
-const W = 8 * S, H = 10.5 * S, PAD = 44;
+const P1 = inset(OUT, WDVS), P2 = inset(OUT, T);
+const W = 8 * S, H = 10.5 * S;
+
+// Öffnungen in Außenwänden: Seite, von, bis (Meter entlang der Wand), Art
+const OPEN = [
+  ['N', 1.0, 3.01, 'f'], ['N', 6.0, 7.135, 'f'],
+  ['E', 1.5, 2.76, 'f'], ['E', 6.0, 8.01, 'f'],
+  ['S', 4.5, 6.51, 'f'],
+  ['W', 1.5, 2.76, 'f'], ['W', 6.0, 7.01, 't'],
+];
+// Wandlage je Seite: Rechteck der Wanddicke für einen Abschnitt a..b
+function wallRect(side, a, b) {
+  if (side === 'N') return [a, 0, b - a, T];
+  if (side === 'S') return [a, 10.5 - T, b - a, T];
+  if (side === 'E') return [8 - T, a, T, b - a];
+  return [0, a, T, b - a];
+}
 
 function layout() {
   const vw = innerWidth, vh = innerHeight, split = vw * .61;
-  const x = Math.min(split - W - 118, split * .66), y = Math.max(150, (vh - H) / 2 - 10);
+  const x = Math.min(split - W - 118, split * .66), y = Math.max(190, (vh - H) / 2 + 14);
   Object.assign(plan.style, { left: x + 'px', top: y + 'px' });
   plan.setAttribute('width', W); plan.setAttribute('height', H);
   plan.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const v = document.getElementById('views');
-  Object.assign(v.style, { left: (x + W - 296) + 'px', top: (y - 70) + 'px' });
+  Object.assign(v.style, { left: (x + W - 296) + 'px', top: (y - 140) + 'px' });
   return { x, y };
 }
 
 function draw() {
   plan.innerHTML = '';
   const defs = el('defs', {});
-  // Mauerwerk: enge Diagonalschraffur
   const pm = el('pattern', { id: 'mw', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
-  el('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#111316', 'stroke-width': 1 }, pm);
-  // Dämmung: Zickzack
+  el('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: INK, 'stroke-width': 1 }, pm);
   const pd = el('pattern', { id: 'wd', width: 8, height: 8, patternUnits: 'userSpaceOnUse' }, defs);
-  el('path', { d: 'M0 0 L4 8 L8 0', fill: 'none', stroke: '#111316', 'stroke-width': .9 }, pd);
-  // Beton (Sohlplatte unter dem Grundriss angedeutet)
-  el('path', { d: d(inset(OUT, -0.12)), fill: 'none', stroke: '#111316', 'stroke-width': .8, 'stroke-dasharray': '7 5', opacity: .55 });
+  el('path', { d: 'M0 0 L4 8 L8 0', fill: 'none', stroke: INK, 'stroke-width': .9 }, pd);
+
+  // Außenwände: Dämmung und Mauerwerk, Raumfläche
+  el('path', { d: d(P2), fill: ROOM });
   el('path', { d: d(OUT) + ' ' + d(P1), 'fill-rule': 'evenodd', fill: 'url(#wd)' });
   el('path', { d: d(P1) + ' ' + d(P2), 'fill-rule': 'evenodd', fill: 'url(#mw)' });
-  el('path', { d: d(OUT), fill: 'none', stroke: '#111316', 'stroke-width': 1.3 });
-  el('path', { d: d(P1), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
-  el('path', { d: d(P2), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
-  el('path', { d: d(P2), fill: '#fbfaf6' });
-  el('path', { d: d(P2), fill: 'none', stroke: '#111316', 'stroke-width': 2.6 });
-  // Innenwände
-  const iw = (x0, y0, x1, y1) => { const r = el('rect', { x: x0 * S, y: y0 * S, width: (x1 - x0) * S, height: (y1 - y0) * S, fill: 'url(#mw)', stroke: '#111316', 'stroke-width': 2.2 }); };
-  iw(0.315, 4.6, 5.2, 4.6 + 0.175);
-  iw(5.2, 0.315, 5.2 + 0.175, 4.775);
-  iw(3.0, 4.775, 3.175, 8.185);
-  // Schnittlinie A–A
-  const yA = 2.6 * S;
-  el('line', { x1: -PAD, y1: yA, x2: W + PAD, y2: yA, stroke: '#111316', 'stroke-width': 1, 'stroke-dasharray': '22 5 3 5' });
-  [[-PAD, -1], [W + PAD, 1]].forEach(([xx, s]) => {
-    el('path', { d: `M${xx} ${yA} L${xx} ${yA - 20}`, stroke: '#111316', 'stroke-width': 2 });
-    el('path', { d: `M${xx - 5} ${yA - 12} L${xx} ${yA - 22} L${xx + 5} ${yA - 12}`, fill: '#111316' });
-    el('text', { x: xx + 10 * s - (s < 0 ? 8 : 0), y: yA - 4, 'font-family': 'JetBrains Mono', 'font-size': 15, 'font-weight': 500, fill: '#111316' }).textContent = 'A';
+  el('path', { d: d(OUT), fill: 'none', stroke: INK, 'stroke-width': 1.2 });
+  el('path', { d: d(P1), fill: 'none', stroke: INK, 'stroke-width': 2.4 });
+  el('path', { d: d(P2), fill: 'none', stroke: INK, 'stroke-width': 2.4 });
+
+  // Innenwände mit Türöffnungen
+  const iw = (x0, y0, x1, y1) => el('rect', { x: x0 * S, y: y0 * S, width: (x1 - x0) * S, height: (y1 - y0) * S, fill: 'url(#mw)', stroke: INK, 'stroke-width': 2 });
+  const yH = 4.6, tI = 0.175;
+  iw(T, yH, 1.2, yH + tI); iw(2.085, yH, 6.2, yH + tI); iw(7.085, yH, 8 - T, yH + tI);
+  iw(5.2, T, 5.2 + tI, yH);
+  iw(3.0, yH + tI, 3.0 + tI, 5.6); iw(3.0, 6.485, 3.0 + tI, 8.5 - T);
+
+  // Innentüren mit Aufschlag (Türblatt und Viertelkreis)
+  const door = (hx, hy, lx, ly, ax, ay, sweep) => {
+    el('line', { x1: hx * S, y1: hy * S, x2: lx * S, y2: ly * S, stroke: INK, 'stroke-width': 1.6 });
+    el('path', { d: `M${lx * S} ${ly * S} A ${Math.hypot(lx - hx, ly - hy) * S} ${Math.hypot(lx - hx, ly - hy) * S} 0 0 ${sweep} ${ax * S} ${ay * S}`, fill: 'none', stroke: INK, 'stroke-width': .8 });
+  };
+  door(1.2, yH, 1.2, yH - 0.885, 2.085, yH, 1);          // Flur -> Wohnen
+  door(7.085, yH + tI, 7.085, yH + tI + 0.885, 6.2, yH + tI, 1);   // Küche <-> Essen
+  door(3.0 + tI, 6.485, 3.0 + tI + 0.885, 6.485, 3.0 + tI, 5.6, 0); // Flur -> Essen
+
+  // Fenster und Haustür in den Außenwänden
+  OPEN.forEach(([side, a, b, kind]) => {
+    const [rx, ry, rw, rh] = wallRect(side, a, b);
+    el('rect', { x: rx * S, y: ry * S, width: rw * S, height: rh * S, fill: ROOM });
+    const vert = side === 'E' || side === 'W';
+    const jamb = (u) => vert
+      ? el('line', { x1: rx * S, y1: u * S, x2: (rx + rw) * S, y2: u * S, stroke: INK, 'stroke-width': 2.2 })
+      : el('line', { x1: u * S, y1: ry * S, x2: u * S, y2: (ry + rh) * S, stroke: INK, 'stroke-width': 2.2 });
+    jamb(a); jamb(b);
+    if (kind === 'f') {
+      // Brüstung außen und innen, gestrichelt die Lage des späteren Fensterelements
+      const lines = [0.02, T - 0.02];
+      lines.forEach(o => vert
+        ? el('line', { x1: (rx + o) * S, y1: a * S, x2: (rx + o) * S, y2: b * S, stroke: INK, 'stroke-width': .8 })
+        : el('line', { x1: a * S, y1: (ry + o) * S, x2: b * S, y2: (ry + o) * S, stroke: INK, 'stroke-width': .8 }));
+      const m = WDVS + 0.06;
+      const mo = (side === 'N' || side === 'W') ? m : T - m;
+      vert
+        ? el('line', { x1: (rx + mo) * S, y1: a * S, x2: (rx + mo) * S, y2: b * S, stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '4 3' })
+        : el('line', { x1: a * S, y1: (ry + mo) * S, x2: b * S, y2: (ry + mo) * S, stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '4 3' });
+    } else {
+      door(T, a, T + (b - a), a, T, b, 1);
+    }
   });
-  // markierte Wand AW-002 (Osten, x = 8)
-  const t = WDVS + MW;
-  el('rect', { x: (8 - t) * S, y: 0, width: t * S, height: 10.5 * S, fill: 'rgba(242,179,61,.42)', stroke: '#f2b33d', 'stroke-width': 3 });
-  // Gummiband am Wandfuß
+
+  // Raumstempel mit Name und Fläche
+  const stamp = (x, y, name, area, hot) => {
+    const g = el('g', { transform: `translate(${x * S} ${y * S})` });
+    el('rect', { x: -44, y: -20, width: 88, height: 40, rx: 4, fill: hot ? '#f6e3b4' : '#efe8d6' }, g);
+    el('text', { x: 0, y: -2, 'text-anchor': 'middle', 'font-family': 'Inter Tight', 'font-size': 13.5, 'font-weight': 600, fill: INK }, g).textContent = name;
+    el('text', { x: 0, y: 13, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono', 'font-size': 11, fill: '#6b6e73' }, g).textContent = area;
+  };
+  stamp(2.7, 2.9, 'Wohnen', '20,93 m²');
+  stamp(6.55, 2.9, 'Küche', '9,90 m²');
+  stamp(1.6, 6.3, 'Flur', '9,16 m²');
+  stamp(5.6, 7.6, 'Essen', '24,12 m²');
+
+  // markierte Wand AW-002 (Osten)
+  el('rect', { x: (8 - T) * S, y: 0, width: T * S, height: 10.5 * S, fill: 'rgba(242,179,61,.38)', stroke: '#f2b33d', 'stroke-width': 3 });
   el('line', { x1: 8 * S + 9, y1: 6, x2: 8 * S + 9, y2: 10.5 * S - 6, stroke: '#8f63f0', 'stroke-width': 5, 'stroke-linecap': 'round' });
-  el('circle', { cx: 8 * S + 9, cy: 7.2 * S, r: 9, fill: '#8f63f0', stroke: '#f3f1ea', 'stroke-width': 3 });
-  // Raumbezeichnungen leise, wie Bleistift
-  const lab = (x, y, s) => { el('text', { x: x * S, y: y * S, 'font-family': 'JetBrains Mono', 'font-size': 12, fill: '#55585e', 'letter-spacing': '.06em' }).textContent = s; };
-  lab(0.9, 2.2, 'WOHNEN');
-  lab(5.9, 2.2, 'KÜCHE');
-  lab(4.0, 6.6, 'ESSEN');
-  lab(0.9, 6.6, 'FLUR');
-  el('text', { x: 0, y: H + 34, 'font-family': 'JetBrains Mono', 'font-size': 12.5, fill: '#55585e', 'letter-spacing': '.08em' }).textContent = 'GRUNDRISS EG  ·  ±0,00';
+  el('circle', { cx: 8 * S + 9, cy: 9.2 * S, r: 9, fill: '#8f63f0', stroke: '#f3f1ea', 'stroke-width': 3 });
+
+  // Maßketten nach DIN 1356-1: Norden und Westen, Öffnungen und Gesamtmaß
+  const chain = (pts, off, vert) => {
+    const g = el('g', {});
+    const P = v => v * S;
+    const line = (a, b) => vert
+      ? el('line', { x1: P(off), y1: P(a), x2: P(off), y2: P(b), stroke: INK, 'stroke-width': .8 }, g)
+      : el('line', { x1: P(a), y1: P(off), x2: P(b), y2: P(off), stroke: INK, 'stroke-width': .8 }, g);
+    line(pts[0] - 0.12, pts[pts.length - 1] + 0.12);
+    pts.forEach(u => {
+      // Hilfslinie und Schrägstrich
+      vert
+        ? el('line', { x1: P(off) - 5, y1: P(u) + 5, x2: P(off) + 5, y2: P(u) - 5, stroke: INK, 'stroke-width': 1.4 }, g)
+        : el('line', { x1: P(u) - 5, y1: P(off) + 5, x2: P(u) + 5, y2: P(off) - 5, stroke: INK, 'stroke-width': 1.4 }, g);
+    });
+    for (let i = 0; i < pts.length - 1; i++) {
+      const m = (pts[i] + pts[i + 1]) / 2, txt = fmt(pts[i + 1] - pts[i]);
+      const t = vert
+        ? el('text', { x: P(off) - 5, y: P(m), transform: `rotate(-90 ${P(off) - 5} ${P(m)})`, 'text-anchor': 'middle', 'font-family': 'Inter Tight', 'font-size': 11.5, fill: INK }, g)
+        : el('text', { x: P(m), y: P(off) - 5, 'text-anchor': 'middle', 'font-family': 'Inter Tight', 'font-size': 11.5, fill: INK }, g);
+      t.textContent = txt;
+    }
+  };
+  chain([0, 1.0, 3.01, 6.0, 7.135, 8.0], -0.75, false);
+  chain([0, 8.0], -1.35, false);
+  chain([0, 1.5, 2.76, 6.0, 7.01, 8.5], -0.75, true);
+  chain([0, 8.5], -1.35, true);
+
+  // Nordpfeil
+  const n = el('g', { transform: `translate(${W + 46} ${-1.05 * S})` });
+  el('circle', { r: 15, fill: 'none', stroke: INK, 'stroke-width': 1.2 }, n);
+  el('path', { d: 'M0 -12 L6 9 L0 4 L-6 9 Z', fill: INK }, n);
+  el('text', { x: 0, y: -21, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono', 'font-size': 11, 'font-weight': 500, fill: INK }, n).textContent = 'N';
+
+  el('text', { x: 0, y: H + 34, 'font-family': 'JetBrains Mono', 'font-size': 12.5, fill: '#55585e', 'letter-spacing': '.08em' }).textContent = 'GRUNDRISS EG  ·  ±0,00  ·  SCHNITTHÖHE 1,50 M';
 }
 
 // Linie von der markierten Wand zur Zeile im Auswertungsfenster

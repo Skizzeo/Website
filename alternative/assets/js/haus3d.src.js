@@ -42,7 +42,8 @@ export function init(canvas, opts = {}) {
   const lineMat = new LineMaterial({ color: C.edge, linewidth: 2 });
   const amberLine = new LineMaterial({ color: C.amber, linewidth: 2.6, transparent: true, opacity: 0.95 });
   const bandLine = new LineMaterial({ color: C.band, linewidth: 4 });
-  const lineMats = [lineMat, amberLine, bandLine];
+  const thinLine = new LineMaterial({ color: 0x2b2d2a, linewidth: 1.1, transparent: true, opacity: 0.8 });
+  const lineMats = [lineMat, amberLine, bandLine, thinLine];
 
   // Licht
   scene.add(new THREE.HemisphereLight(0xf4f1e6, 0x2c3328, 1.55));
@@ -50,7 +51,7 @@ export function init(canvas, opts = {}) {
   sun.position.set(-14, 22, 16);
   sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048);
-  Object.assign(sun.shadow.camera, { left: -18, right: 18, top: 18, bottom: -18, near: 1, far: 70 });
+  Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 20, bottom: -20, near: 1, far: 90 });
   sun.shadow.bias = -0.0004;
   sun.shadow.radius = 6;
   scene.add(sun);
@@ -83,12 +84,12 @@ export function init(canvas, opts = {}) {
     new THREE.MeshLambertMaterial({ map: tex, transparent: true, depthWrite: false })
   );
   ground.rotation.x = -Math.PI / 2;
-  ground.position.y = -0.22;
+  ground.position.y = -0.49;
   ground.receiveShadow = true;
   scene.add(ground);
   const shadowCatcher = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: 0.38 }));
   shadowCatcher.rotation.x = -Math.PI / 2;
-  shadowCatcher.position.y = -0.215;
+  shadowCatcher.position.y = -0.485;
   shadowCatcher.receiveShadow = true;
   scene.add(shadowCatcher);
 
@@ -112,17 +113,80 @@ export function init(canvas, opts = {}) {
     return m;
   }
 
+  // Sonnenstand (vereinfachte Sonnenbahn, Breite ~53° N wie Norddeutschland)
+  const LAT = 53 * Math.PI / 180, DECL = 23.44 * Math.PI / 180;   // 21.06.
+  const SUN_R = 15;
+  function sunDir(solarHour) {
+    const h = (solarHour - 12) * 15 * Math.PI / 180;
+    const sinE = Math.sin(LAT) * Math.sin(DECL) + Math.cos(LAT) * Math.cos(DECL) * Math.cos(h);
+    const e = Math.asin(sinE);
+    const A = Math.atan2(Math.sin(h), Math.cos(h) * Math.sin(LAT) - Math.tan(DECL) * Math.cos(LAT)) + Math.PI;
+    // Norden = -z, Osten = +x, Süden = +z
+    return new THREE.Vector3(Math.sin(A) * Math.cos(e), Math.sin(e), -Math.cos(A) * Math.cos(e));
+  }
+  const SUN_HOUR = opts.sunHour ?? 8.05;                           // Sonnenzeit, entspricht etwa 9:30 Uhr MESZ
+  const sd = sunDir(SUN_HOUR);
+  sun.position.copy(sd).multiplyScalar(40);
+  const sunGroup = new THREE.Group();
+  {
+    const pts = [];
+    for (let t = 4.2; t <= 19.8; t += 0.1) {
+      const v = sunDir(t); if (v.y < -0.02) continue;
+      pts.push(v.multiplyScalar(SUN_R));
+    }
+    const pos = [];
+    for (let i = 0; i < pts.length - 1; i += 2) { const p = pts[i], q = pts[i + 1]; pos.push(p.x, p.y, p.z, q.x, q.y, q.z); }
+    const g = new LineSegmentsGeometry().setPositions(pos);
+    sunGroup.add(new LineSegments2(g, new LineMaterial({ color: C.amber, linewidth: 2, transparent: true, opacity: 0.55 })));
+    lineMats.push(sunGroup.children[0].material);
+    const ball = new THREE.Mesh(new THREE.SphereGeometry(0.42, 32, 16), new THREE.MeshBasicMaterial({ color: 0xf6c45a }));
+    ball.position.copy(sd).multiplyScalar(SUN_R);
+    sunGroup.add(ball);
+    const halo = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 16), new THREE.MeshBasicMaterial({ color: C.amber, transparent: true, opacity: 0.18, depthWrite: false }));
+    halo.position.copy(ball.position);
+    sunGroup.add(halo);
+  }
+  scene.add(sunGroup);
+
+  const darkMat = new THREE.MeshLambertMaterial({ color: 0x343c40 });
+  const roofMat = new THREE.MeshLambertMaterial({ color: 0x8c8a80 });
+  const pipeMat = new THREE.MeshLambertMaterial({ color: 0x8e9294 });
+  const grass = new THREE.MeshLambertMaterial({ color: 0x55703c });
+  const soil = new THREE.MeshLambertMaterial({ color: 0x5b4535 });
+  const terrainMats = [soil, soil, grass, soil, soil, soil];
+  let openingCount = 0, laibung = 0, openArea = 0;
+
+  // Öffnung in einer Fassade: dunkle Fläche knapp vor der Wand, mit Kanten
+  function opening(face, u0, u1, y0, y1, plane) {
+    const w = u1 - u0, h = y1 - y0, t = 0.04;
+    let geo, x, z;
+    if (face === 'z') { geo = new THREE.BoxGeometry(w, h, t); x = (u0 + u1) / 2; z = plane; }
+    else { geo = new THREE.BoxGeometry(t, h, w); x = plane; z = (u0 + u1) / 2; }
+    const m = new THREE.Mesh(geo, darkMat);
+    m.position.set(x, (y0 + y1) / 2, z);
+    m.receiveShadow = true;
+    house.add(m);
+    const l = boxEdges(geo, lineMat); l.position.copy(m.position); house.add(l);
+    openingCount++; laibung += 2 * h + (y0 > 0.05 ? 2 * w : w); openArea += w * h;
+  }
+
   function build() {
     house.clear();
     selection.clear();
+    openingCount = 0; laibung = 0; openArea = 0;
     const d = depth;
+    const ogD = d - SETBACK, ogZ = -SETBACK / 2, ogX = -CANT / 2, ogW = W + CANT;
+    // Geländeplatte mit Rasen
+    const tg = new THREE.BoxGeometry(ogW + 5, 0.36, d + 5);
+    const terr = new THREE.Mesh(tg, terrainMats);
+    terr.position.set(ogX, -0.3, 0.3);
+    terr.receiveShadow = true;
+    house.add(terr);
+    const tl = boxEdges(tg, lineMat); tl.position.copy(terr.position); house.add(tl);
     // Gründung: Sohlplatte mit Sockelrücksprung
     solid(W + 0.1, 0.22, d + 0.1, 0, -0.11, 0, plinthMat);
     // EG als Massenkörper
     solid(W, H, d, 0, H / 2, 0);
-    // Decke über EG (leicht dunkler, weil Dachterrasse)
-    const ogD = d - SETBACK;
-    const ogZ = -SETBACK / 2;
     // Dachterrassenbelag auf dem Rücksprung
     solid(W - 2 * 0.25, 0.06, SETBACK - 0.25, 0, H + 0.03, d / 2 - (SETBACK - 0.25) / 2 - 0.25, deckMat, false);
     // Attika um die Dachterrasse
@@ -130,30 +194,69 @@ export function init(canvas, opts = {}) {
     solid(W, ah, at, 0, H + ah / 2, d / 2 - at / 2);
     solid(at, ah, SETBACK, -W / 2 + at / 2, H + ah / 2, d / 2 - SETBACK / 2);
     solid(at, ah, SETBACK, W / 2 - at / 2, H + ah / 2, d / 2 - SETBACK / 2);
-    // OG zurückgesetzt nach vorne, vorspringend nach rechts
-    solid(W + CANT, H, ogD, CANT / 2, H + H / 2, ogZ);
-    // Attika OG (Flachdach-Abschluss)
-    solid(W + CANT, 0.3, ogD, CANT / 2, 2 * H + 0.15, ogZ);
+    // Ablauf der Dachterrasse
+    solid(0.28, 0.02, 0.28, W / 2 - 0.9, H + 0.07, d / 2 - 0.8, darkMat, false);
+    // OG zurückgesetzt nach vorne, vorspringend nach links
+    solid(ogW, H, ogD, ogX, H + H / 2, ogZ);
+    // Flachdach mit umlaufender Aufkantung
+    const rt = 0.25, rh = 0.48, top = 2 * H;
+    solid(ogW - 2 * rt, 0.12, ogD - 2 * rt, ogX, top + 0.06, ogZ, roofMat, false);
+    solid(ogW, rh, rt, ogX, top + rh / 2, ogZ + ogD / 2 - rt / 2);
+    solid(ogW, rh, rt, ogX, top + rh / 2, ogZ - ogD / 2 + rt / 2);
+    solid(rt, rh, ogD - 2 * rt, ogX - ogW / 2 + rt / 2, top + rh / 2, ogZ);
+    solid(rt, rh, ogD - 2 * rt, ogX + ogW / 2 - rt / 2, top + rh / 2, ogZ);
+    // Gefälle: Kehlen und Grate zu zwei Abläufen
+    {
+      const y = top + 0.125, x0 = ogX - ogW / 2 + rt, x1 = ogX + ogW / 2 - rt, z0 = ogZ - ogD / 2 + rt, z1 = ogZ + ogD / 2 - rt;
+      const dA = [ogX - ogW / 4, ogZ], dB = [ogX + ogW / 4, ogZ];
+      const pos = [x0, y, z0, ...[dA[0], y, dA[1]], x0, y, z1, dA[0], y, dA[1], x1, y, z0, dB[0], y, dB[1], x1, y, z1, dB[0], y, dB[1],
+        ogX, y, z0, ogX, y, z1, dA[0], y, dA[1], dB[0], y, dB[1]];
+      house.add(new LineSegments2(new LineSegmentsGeometry().setPositions(pos), thinLine));
+      [dA, dB].forEach(p => solid(0.3, 0.02, 0.3, p[0], y + 0.01, p[1], darkMat, false));
+    }
+    // Regenfallrohre außen an der Attika, rechte Fassade
+    const pipeZ = [ogZ - ogD / 2 + 0.7, ogZ + ogD / 2 - 0.7];
+    pipeZ.forEach(z => {
+      const len = top + rh - 0.2;
+      const pg = new THREE.CylinderGeometry(0.07, 0.07, len, 16);
+      const p = new THREE.Mesh(pg, pipeMat); p.position.set(W / 2 + 0.14, len / 2, z); p.castShadow = true; house.add(p);
+      solid(0.22, 0.32, 0.3, W / 2 + 0.16, top + rh - 0.3, z, pipeMat);
+      for (let y = 1.0; y < len - 0.6; y += 1.6) solid(0.12, 0.04, 0.2, W / 2 + 0.08, y, z, pipeMat, false);
+    });
+
+    // Fenster und Türen: EG vorne (bewegliche Wand) wandert mit
+    const fz = d / 2 + 0.005, rz = W / 2 + 0.005;
+    opening('z', -3.7, -2.2, 0.9, 2.285, fz);
+    opening('z', -0.55, 0.585, 0.0, 2.135, fz);
+    opening('z', 1.5, 3.51, 0.9, 2.285, fz);
+    opening('x', -0.63, 0.63, 0.9, 2.285, rz);
+    opening('x', -3.0 + (d - 8) / 2 * 0, -1.74, 0.9, 2.285, rz);
+    // OG: Fenstertür zur Dachterrasse, Fenster vorne und seitlich
+    const oz = d / 2 - SETBACK + 0.005;
+    opening('z', -2.6, 0.4, H, H + 2.2, oz);
+    opening('z', 1.8, 3.31, H + 0.9, H + 2.285, oz);
+    opening('x', ogZ - 0.9, ogZ + 0.36, H + 0.9, H + 2.285, rz);
 
     // markierte Wand: EG vorne (bewegliche Wand), wie im Programm orange hinterlegt
     const wallGeo = new THREE.BoxGeometry(W + 0.04, H + 0.04, T);
-    const wall = new THREE.Mesh(wallGeo, new THREE.MeshBasicMaterial({ color: C.amber, transparent: true, opacity: 0.28, depthWrite: false }));
-    wall.position.set(0, H / 2, d / 2 - T / 2 + 0.02);
+    const wall = new THREE.Mesh(wallGeo, new THREE.MeshBasicMaterial({ color: C.amber, transparent: true, opacity: 0.26, depthWrite: false }));
+    wall.position.set(0, H / 2, d / 2 - T / 2 + 0.03);
     selection.add(wall);
     const wl = boxEdges(wallGeo, amberLine); wl.position.copy(wall.position); selection.add(wl);
     // violettes Gummiband am Wandfuß
     const bandG = new LineSegmentsGeometry().setPositions([-W / 2, 0.02, d / 2 + 0.06, W / 2, 0.02, d / 2 + 0.06]);
     selection.add(new LineSegments2(bandG, bandLine));
     const knob = new THREE.Mesh(new THREE.SphereGeometry(0.16, 24, 16), new THREE.MeshBasicMaterial({ color: C.band }));
-    knob.position.set(W / 2 - 1.6, 0.04, d / 2 + 0.06);
+    knob.position.set(W / 2 - 1.0, 0.04, d / 2 + 0.06);
     selection.add(knob);
     scene.add(selection);
 
     anchors = {
-      wall: new THREE.Vector3(W * 0.12, H * 0.45, d / 2),
+      wall: new THREE.Vector3(-W * 0.2, H * 0.72, d / 2),
       knob: knob.position.clone(),
-      terrace: new THREE.Vector3(-W * 0.18, H + 0.08, d / 2 - SETBACK * 0.55),
-      og: new THREE.Vector3(W / 2 + CANT, H * 1.6, ogZ + ogD / 2),
+      pipe: new THREE.Vector3(W / 2 + 0.14, H * 1.45, pipeZ[0]),
+      sun: sd.clone().multiplyScalar(SUN_R),
+      roof: new THREE.Vector3(ogX - ogW / 4, top + 0.15, ogZ),
     };
   }
 
@@ -161,16 +264,21 @@ export function init(canvas, opts = {}) {
   function stats(d = depth) {
     const ogD = d - SETBACK;
     const lenEG = 2 * (W + d), lenOG = 2 * (W + CANT + ogD);
-    const awVol = (lenEG + lenOG) * H * 0.175;          // Gasbeton 17,5
-    const wdvs = (lenEG + lenOG) * H;                    // Dämmung WDVS, Fläche
+    const big = 2.01 * 1.385 + 1.5 * 1.385 + 1.135 * 2.135 + 3.0 * 2.2 + 1.51 * 1.385; // > 2,5 m² nach VOB abgezogen (vereinfacht)
+    const awVol = ((lenEG + lenOG) * H - big) * 0.175;   // Gasbeton 17,5
+    const wdvs = (lenEG + lenOG) * H - big;              // Dämmung WDVS, Fläche
     const sohle = (W + 0.1) * (d + 0.1);
     const decken = W * d + (W + CANT) * ogD;
     const terrasse = (W - 0.5) * (SETBACK - 0.25);
+    const dach = (W + CANT - 0.5) * (ogD - 0.5);
     const rohbau = awVol * 265 + sohle * 0.22 * 330 + decken * 0.22 * 360 + lenEG * 0.8 * 0.3 * 300;
     const fassade = wdvs * 118;
     const terr = terrasse * 245;
-    const sum = rohbau + fassade + terr;
-    return { depth: d, lenEG, awVol, wdvs, sohle, decken, terrasse, rohbau, fassade, terr, sum };
+    const dachK = dach * 168 + 2 * 640;                   // Gefälledämmung, Abdichtung, Fallrohre
+    const oeff = 8, laib = 31.4;
+    const baustelle = 6400 + sohle * 38;                  // Baustelleneinrichtung und Erdarbeiten
+    const sum = rohbau + fassade + terr + dachK + baustelle;
+    return { depth: d, lenEG, awVol, wdvs, sohle, decken, terrasse, dach, oeff, laib, baustelle, rohbau, fassade, terr, dachK, sum };
   }
 
   build();

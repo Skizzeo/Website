@@ -95,17 +95,21 @@ nav a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -9
 
 /* Kachel 4: Grundriss */
 .t-plan { grid-column: 4 / 7; grid-row: 5 / 7; background: var(--paper); }
-.t-plan img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.t-sun { grid-column: 7 / 10; grid-row: 5 / 7; background: #3b4236; }
+.t-sun img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 45%; }
+.t-sun .label { position: absolute; left: 14px; bottom: 14px; }
+.t-sun .go { background: rgba(18,22,27,.85); }
+.pill.dark { background: rgba(18,22,27,.88); }
+.t-hero .who { margin: 24px 0 28px; font-size: 14.5px; color: var(--text); display: flex; gap: 10px; }
+.t-hero .who span { font: 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--amber); padding-top: 2px; }
+.bench-txt { margin-top: 10px; font-size: 13.5px; line-height: 1.45; color: var(--soft); }
+.t-plan img { position: absolute; inset: 14px 14px 56px; width: calc(100% - 28px); height: calc(100% - 70px); object-fit: contain; }
 .t-plan .label { position: absolute; left: 14px; bottom: 14px; }
 .pill { display: inline-flex; gap: 8px; align-items: center; background: #12161b; color: var(--text); border-radius: 999px; padding: 8px 13px; font-size: 13.5px; font-weight: 500; }
 .pill em { font-style: normal; color: var(--amber); font-family: var(--mono); font-size: 12px; }
 .t-plan .go { background: rgba(18,22,27,.85); }
 
 /* Kachel 5: Für wen */
-.t-who { grid-column: 7 / 10; grid-row: 5 / 7; padding: 20px 22px; display: flex; flex-direction: column; }
-.t-who ul { list-style: none; margin: auto 0 0; padding: 0; }
-.t-who li { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--line); font-size: 16px; }
-.t-who li span { color: var(--soft); font-size: 13px; }
 
 /* Kachel 6: Werkbank (Ausblick) */
 .t-bench { grid-column: 10 / 13; grid-row: 5 / 7; padding: 20px 22px; display: flex; flex-direction: column;
@@ -143,7 +147,8 @@ footer a { color: var(--soft); text-decoration: none; }
     <section class="tile t-hero">
       <p class="k"><b>●</b> BIM für Ein- und Mehrfamilienhäuser</p>
       <h1>Haus zeichnen.<br><em>Mengen, Kosten und LV</em> sind schon da.</h1>
-      <p class="lead">Skizzeo ist der 3D-Gebäudemodellierer für den Wohnungsbau, gedacht von einem Bauplaner. Ohne Parameterflut, ohne Schulungsmarathon, mit voller BIM-Tiefe im Hintergrund.</p>
+      <p class="lead">Skizzeo ist der 3D-Gebäudemodellierer für den Wohnungsbau, gedacht von einem Bauplaner. Wände, Fenster und Türen ziehen Sie direkt am Modell. Räume, Maßketten und Regenfallrohre entstehen von selbst, ohne Parameterflut.</p>
+      <p class="who"><span>Für</span> Architekten · Bauunternehmer · Bauträger · Immobilienmakler</p>
       <div class="ctas">
         <a class="btn amber" href="#programm">Programm ansehen →</a>
         <a class="btn line" href="#idee">Die Idee</a>
@@ -165,39 +170,36 @@ footer a { color: var(--soft); text-decoration: none; }
     <section class="tile t-live">
       <p class="k"><b>02</b> Kosten live</p>
       <span class="go">↗</span>
-      <p class="what">Kostenschätzung netto<br>nach DIN 276, beim Zeichnen</p>
-      <p class="num" data-count="46878">46.878<small>€</small></p>
+      <p class="what">Kostenschätzung nach DIN 276,<br>mit Baustelle und Erdarbeiten</p>
+      <p class="num" data-count="78816">78.816<small>€</small></p>
       <div class="bars"><i style="height:38%"></i><i style="height:46%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:55%"></i><i style="height:66%"></i><i style="height:72%"></i><i class="a" style="height:84%"></i></div>
-      <p class="sub">Jede Wand ändert die Schätzung sofort <b>Beispiel</b></p>
+      <p class="sub">Mengen nach VOB, mit Rechenweg <b>Beispiel</b></p>
     </section>
 
     <section class="tile t-plan">
-      <img src="assets/img/schnittdetail.png" alt="Schnittdetail mit mehrschaliger Wand, Dachterrasse und Attika, normgerecht schraffiert.">
+      <img src="assets/img/grundriss-massketten.png" alt="Zwei Gebäude im Grundriss, automatisch bemaßt nach DIN, mit Tür, Fenster und Brüstungshöhe.">
       <span class="go">↗</span>
-      <div class="label"><span class="pill"><em>03</em> Denkt wie ein Bauplaner</span></div>
+      <div class="label"><span class="pill"><em>03</em> Bemaßt nach DIN, von selbst</span></div>
     </section>
 
-    <section class="tile t-who">
-      <p class="k"><b>04</b> Für wen</p>
+    <section class="tile t-sun">
+      <img src="assets/img/sonnenbahn.png" alt="Haus in 3D mit Sonnenbahn und Schattenwurf; der Schatten hat einen Griff zum Ziehen.">
       <span class="go">↗</span>
-      <ul>
-        <li>Architekten <span>Wohnungsbau</span></li>
-        <li>Bauunternehmer <span>Massivhaus, GU</span></li>
-        <li>Bauträger <span>Firmenstandard</span></li>
-        <li>Immobilienmakler <span>Kundengespräch</span></li>
-      </ul>
+      <div class="label"><span class="pill dark"><em>04</em> Sonne und Schatten zum Anfassen</span></div>
     </section>
 
     <section class="tile t-bench">
-      <span class="badge">In Entwicklung</span>
+      <span class="badge">Werkbank in Entwicklung</span>
       <h3>Eigene Bauteile.<br>Ohne Programmieren.</h3>
-      <p class="bubble"><b>IHRE BESCHREIBUNG</b>Stahlbetonstütze 24/24, Fuß auf der Rohdecke, Kopf unter der Decke.</p>
+      <p class="bench-txt">Treppe, Geländer, Stütze: Erweiterungsbauteile liest Skizzeo schon heute ein, mit Mengen, Kosten und LV.</p>
+      <p class="bubble"><b>IHRE BESCHREIBUNG</b>Gerade Treppe, 16 Steigungen, Lauf 1,00 m breit.</p>
     </section>
   </main>
 
   <footer>
     <span>© 2026 Skizzeo</span>
     <span class="chain"><span>Bauteil</span><i>→</i><span>Schicht</span><i>→</i><span>Baustoff</span><i>→</i><span>Bauleistung</span><i>→</i><span>Leistungsverzeichnis</span></span>
+    <span class="chain"><span>IFC4</span><i>·</i><span>offen für Fachplaner</span></span>
     <span class="right"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></span>
   </footer>
 </div>
