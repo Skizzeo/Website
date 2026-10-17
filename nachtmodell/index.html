@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skizzeo – Ziehen Sie die Wand. Die Kosten ziehen mit.</title>
+<meta name="description" content="Skizzeo ist ein BIM-Gebäudemodellierer für Ein- und Mehrfamilienhäuser. Wände, Fenster, Türen und Räume entstehen direkt am Modell, Mengen, Kostenschätzung und Leistungsverzeichnis laufen live mit.">
+<meta name="theme-color" content="#0b0e11">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-scene="full">
+
+<canvas id="stage" aria-label="3D-Modell eines zweigeschossigen Hauses mit Dachterrasse und Flachdach. Auf der Startseite lässt sich die markierte Außenwand mit der Maus ziehen."></canvas>
+<div class="raster" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="head">
+  <a class="brand" href="#start" aria-label="Skizzeo, zur Startseite">
+    <svg viewBox="0 0 1219 909" aria-hidden="true"><path fill="currentColor" d="M0 237.5 C0 96.5 103.9 0 259.6 0 L586 0 L586 434.7 L935 0 L1190 0 L840 427.5 L1219 909 L956.5 909 L587.3 452 C518.5 366.9 419 287 339 287 L0 287 Z M0 390.6 L0 909 L445.5 909 C532.1 909 602.2 836.9 602.2 748 C602.2 659.1 532.1 587 445.5 587 L281.5 587 C157.1 587 38.5 480.6 0 390.6 Z"/></svg>
+    Skizzeo
+  </a>
+  <nav class="nav" id="nav" aria-label="Hauptnavigation">
+    <a href="#start" data-nav="start">Start</a>
+    <a href="#idee" data-nav="idee">Idee</a>
+    <a href="#modell" data-nav="programm">Programm</a>
+    <a href="#fuer-wen" data-nav="fuer-wen">Für wen</a>
+    <a href="#werkbank" data-nav="werkbank">Werkbank</a>
+    <a href="#kontakt" data-nav="kontakt">Kontakt</a>
+  </nav>
+  <div class="head-right">
+    <p class="status"><i></i>In Entwicklung</p>
+    <a class="btn ghost small" href="#kontakt">Informiert bleiben</a>
+    <button type="button" class="menu-btn" id="menu-btn" aria-controls="nav" aria-expanded="false"><span></span><span class="sr">Menü</span></button>
+  </div>
+</header>
+
+<main class="pages" id="pages" data-dir="next">
+
+  <!-- 01 · Start -->
+  <section class="page p-start" id="start" data-nav="start" data-title="Start" data-scene="full" data-view="hero" aria-labelledby="t-start" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>BIM</b> für Ein- und Mehrfamilienhäuser</p>
+      <h1 id="t-start" class="rise" style="--d:1">Ziehen Sie die Wand.<span>Die Kosten ziehen mit.</span></h1>
+      <p class="lead rise" style="--d:2">Skizzeo ist ein 3D-Gebäudemodellierer, der wie ein Bauplaner denkt. Wände, Fenster, Türen und Räume entstehen direkt am Modell, <strong>Mengen, Kostenschätzung und Leistungsverzeichnis</strong> laufen live mit, in beide Richtungen gekoppelt.</p>
+      <div class="ctas rise" style="--d:3">
+        <a class="btn primary" href="#modell">Programm ansehen <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#idee">Die Idee dahinter</a>
+      </div>
+    </div>
+
+    <div class="tag" data-anchor="wall" style="--stem:4rem"><div class="label"><em>AW-003</em> Außenwand AW 31,5 · 10,00 m</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag band" data-anchor="knob" style="--stem:2.9rem"><div class="label"><em>Gummiband</em> ziehen <span data-out="shift">+0,60 m</span></div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag plain" data-anchor="pipe" style="--stem:7.5rem"><div class="label">Regenfallrohr · entsteht von selbst</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag plain" data-anchor="roof" style="--stem:7.5rem"><div class="label">Flachdach · Gefälle zu den Abläufen</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag sun" data-anchor="sun" style="--stem:1.9rem"><div class="label"><em>☀</em> <span data-out="sunlabel">21.06. · 9:30 MESZ</span></div><div class="stem"></div><div class="dot"></div></div>
+
+    <div class="views" role="group" aria-label="Blick auf das Modell">
+      <button type="button" data-cam="hero" aria-pressed="true">3D</button><button type="button" data-cam="oben" aria-pressed="false">Von oben</button><button type="button" data-cam="vorne" aria-pressed="false">Vorne</button><button type="button" data-cam="seite" aria-pressed="false">Seite</button>
+    </div>
+    <p class="hint"><kbd>Ziehen</kbd> Wand verschieben</p>
+
+    <aside class="live glass rise" style="--d:3" aria-label="Mengen, Kosten und AVA, Beispielrechnung">
+      <div class="live-head">
+        <div class="tabs" role="tablist" aria-label="Karte wählen">
+          <button type="button" role="tab" data-card="mengen" aria-selected="false">Mengen</button><button type="button" role="tab" data-card="kosten" aria-selected="true">Kosten</button><button type="button" role="tab" data-card="ava" aria-selected="false">AVA</button>
+        </div>
+        <span class="pulse">LIVE</span>
+      </div>
+      <div class="rows" id="live-rows" aria-live="polite"></div>
+      <div class="sum">
+        <div><small id="live-sumlabel">Kostenschätzung netto · DIN 276</small><strong id="live-sum">–</strong></div>
+        <span class="delta" id="live-delta">–</span>
+      </div>
+      <p class="note">Beispielrechnung mit unverbindlichen Referenzwerten</p>
+    </aside>
+  </section>
+
+  <!-- 02 · Idee -->
+  <section class="page p-idee" id="idee" data-nav="idee" data-title="Die Idee" data-scene="dim" data-view="ambient" aria-labelledby="t-idee" tabindex="-1">
+    <div class="text" style="width:54rem">
+      <p class="eyebrow rise">Die Idee</p>
+      <h2 id="t-idee" class="rise" style="--d:1">Gebaut für das Wohnhaus.<span>Gedacht von einem Bauplaner.</span></h2>
+      <p class="lead rise" style="--d:2">Skizzeo ist ein 3D-Gebäudemodellierer für <strong>Einfamilien-, Doppel- und Mehrfamilienhäuser</strong>. Das Programm will nicht jede Bauaufgabe lösen. Es soll genau diese Häuser sehr gut können.</p>
+      <p class="lead rise" style="--d:3">Hinter Skizzeo steht ein Bauplaner und Bauingenieur mit dreißig Jahren Praxis. Jedes Bauteil ist so modelliert, wie es auf der Baustelle entsteht und abgerechnet wird.</p>
+    </div>
+    <div class="ideas">
+      <article class="idea glass rise" style="--d:2"><span class="nr">01</span><h3>Auf das Wohnhaus beschränkt</h3><p>Kein Generalist für jede Bauaufgabe, sondern ein Programm für Wohnhäuser mit Vor- und Rücksprüngen, auch mit mehreren Gebäuden auf dem Grundstück.</p></article>
+      <article class="idea glass rise" style="--d:3"><span class="nr">02</span><h3>Keine Parameterflut</h3><p>Was Skizzeo sinnvoll selbst festlegen kann, legt es selbst fest. Nach einer kurzen Anleitung können Sie loslegen, ohne lange Schulung.</p></article>
+      <article class="idea glass rise" style="--d:4"><span class="nr">03</span><h3>Verborgene Tiefe</h3><p>Erst zeichnen Sie ein Haus. Dann merken Sie, dass Sie die ganze Zeit ein vollständiges BIM-Modell geführt haben, mit Mengen, Kosten und Leistungsverzeichnis.</p></article>
+      <article class="idea glass rise" style="--d:5"><span class="nr">04</span><h3>Bedienung mit Freude</h3><p>Hochwertige, spielerische Bedienelemente und weich animierte Übergänge zwischen den Ansichten. Ein Werkzeug, das man gern in die Hand nimmt.</p></article>
+    </div>
+  </section>
+
+  <!-- 03 · Programm 01: Modellieren -->
+  <section class="page p-modell" id="modell" data-nav="programm" data-chapter="1" data-title="Modellieren in 3D" data-scene="off" aria-labelledby="t-modell" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>01</b> Modellieren in 3D</p>
+      <h2 id="t-modell" class="rise" style="--d:1">Ein Umriss.<span>Ein ganzes Haus.</span></h2>
+      <p class="lead rise" style="--d:2">Ein kurzer Dialog fragt die Höhen ab, dann zeichnen Sie den Umriss des Erdgeschosses. Beim Schließen steht das Gebäude mit Gründung, Erdgeschoss, Obergeschoss und Decken.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Wände wie mit dem Stift.</b>Die Wand baut sich live am Mauszeiger auf, mit Fang, Spurlinien und eingetippten Maßen.</span></li>
+        <li><span><b>Gummiband.</b>Jede Wand live verschieben. Nachbarwände, Decken und Gründung gehen mit.</span></li>
+        <li><span><b>Teilen und vereinen.</b>Teilstücke rein- oder rausziehen. Springt das Obergeschoss zurück, entsteht davor eine Dachterrasse.</span></li>
+        <li><span><b>Fenster und Türen.</b>Öffnungen direkt in die Wand ziehen, in 3D, in der Ansicht oder im Grundriss. Sie wandern mit der Wand.</span></li>
+        <li><span><b>Geschoss- und Höhenmanager.</b>Eine Höhe ziehen oder eintippen, und das ganze Haus passt sich live an.</span></li>
+      </ul>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img src="assets/img/01-3d-gebaeude-mit-projektbaum.png" width="1280" height="800" data-tab="3D-Modell" data-cap="Das Modell mit Werkzeugen, Geschossleiste und Projektbaum. Ausgewählte Wände leuchten orange." alt="Skizzeo mit einem zweigeschossigen Haus in 3D, links die Werkzeuge, rechts Ansichten und Projektbaum. Die gewählten Außenwände sind orange hervorgehoben." loading="lazy">
+        <img src="assets/img/03-3d-geschossversatz.png" width="1280" height="800" data-tab="Geschossversatz" data-cap="Über die Kette an der Wand ist das Obergeschoss vom Erdgeschoss gelöst und versetzt." alt="Haus in 3D, dessen Obergeschoss gegenüber dem Erdgeschoss versetzt ist, daneben das Eigenschaftenfeld der Wand mit Kettensymbol." loading="lazy">
+        <img src="assets/img/02-3d-dachterrasse.png" width="900" height="760" data-tab="Dachterrasse" data-cap="Springt das Obergeschoss zurück, entsteht die Dachterrasse mit Attika von selbst." alt="Haus in 3D mit zurückspringendem Obergeschoss und automatisch entstandener Dachterrasse." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen"></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 04 · Programm 02: Zeichnen mit Maßen -->
+  <section class="page p-zeichnen" id="zeichnen" data-nav="programm" data-chapter="2" data-title="Zeichnen mit Maßen" data-scene="off" aria-labelledby="t-zeichnen" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>02</b> Zeichnen mit Maßen</p>
+      <h2 id="t-zeichnen" class="rise" style="--d:1">Bauzeichnungen,<span>die mitwachsen.</span></h2>
+      <p class="lead rise" style="--d:2">Grundriss, zwei Schnitte und vier Ansichten entstehen jederzeit aus dem Modell, nach deutscher Norm und live aktuell.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Bemaßung nach DIN 1356-1.</b>Grundriss und 3D bemaßen jedes Gebäude von selbst. Die Maßketten folgen jeder Änderung.</span></li>
+        <li><span><b>Mit Maßen bauen.</b>Maßzahl anklicken, neues Maß tippen, und die Wand oder Öffnung springt dorthin.</span></li>
+        <li><span><b>Räume entstehen von selbst.</b>Schließen Wände eine Fläche, entsteht der Raum mit Stempel, Name und Fläche.</span></li>
+        <li><span><b>Innentüren nach DIN 18101.</b>Das Mausrad blättert die Normbreiten, ein Griff dreht Aufschlag und Anschlagseite.</span></li>
+        <li><span><b>Normgerechte Darstellung.</b>Breite Schnittkontur für tragende Bauteile, Schraffuren für Beton, Mauerwerk und Dämmung.</span></li>
+      </ul>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img class="paper" src="assets/img/32-grundriss-mit-massketten.png" width="1117" height="604" data-tab="Maßketten" data-cap="Zwei Gebäude im Grundriss, von selbst bemaßt, mit Tür, Fenster und Brüstungshöhe." alt="Grundriss zweier Gebäude mit automatisch erzeugten Maßketten ringsum, einer Tür, einem Fenster und der Angabe der Brüstungshöhe." loading="lazy">
+        <img class="paper" src="assets/img/33-innentuer-mit-masskette.png" width="1065" height="946" data-tab="Innentür" data-cap="Beim Setzen der Innentür läuft eine Maßkette zu den Nachbarwänden live mit." alt="Grundriss mit einer Innentür beim Setzen, eine violette Maßkette misst die Abstände zu den Nachbarwänden, außen laufen Maßketten ringsum." loading="lazy">
+        <img class="paper" src="assets/img/31-grundriss-mit-raumstempeln.png" width="1118" height="910" data-tab="Räume" data-cap="Drei Räume, von selbst entstanden, mit Name und Fläche im Raumstempel." alt="Grundriss mit drei Räumen Wohnen, Küche und Bad, jeweils mit Raumstempel und Fläche." loading="lazy">
+        <img src="assets/img/34-raum-mit-ausbau-im-paneel.png" width="360" height="912" data-tab="Raumbuch" data-cap="Das Paneel eines Wohnzimmers zeigt den Ausbau mit Mengen: Boden, Estrich, Wand, Decke und Sockelleiste." alt="Eigenschaftenfeld eines Raums mit Fläche, lichter Höhe, Bodenbelag, Estrich, Wandputz, Deckenputz und Sockelleiste samt Mengen." loading="lazy">
+        <img class="paper" src="assets/img/06-schnitt-a-a.png" width="1280" height="800" data-tab="Schnitt" data-cap="Längsschnitt durch das zweigeschossige Haus, mit Schnittrad." alt="Längsschnitt A-A durch ein zweigeschossiges Haus mit normgerechten Schraffuren." loading="lazy">
+        <img class="paper" src="assets/img/08-ansicht-klinkerfassade.png" width="1280" height="800" data-tab="Ansicht" data-cap="Ansicht mit Klinkerfassade, das Muster entsteht als Vektorgrafik." alt="Ansicht eines Hauses mit Klinkerfassade als Vektormuster." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen"></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 05 · Programm 03: Denkt wie ein Bauplaner -->
+  <section class="page p-bauplaner" id="bauplaner" data-nav="programm" data-chapter="3" data-title="Denkt wie ein Bauplaner" data-scene="full" data-view="bauplaner" aria-labelledby="t-bauplaner" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>03</b> Denkt wie ein Bauplaner</p>
+      <h2 id="t-bauplaner" class="rise" style="--d:1">Baulich korrekt.<span>Von selbst.</span></h2>
+      <p class="lead rise" style="--d:2">Was auf der Baustelle dazugehört, entsteht in Skizzeo mit, fachlich richtig und mit Mengen, Kosten und Positionen im Leistungsverzeichnis.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Dachterrasse.</b>Mit Dämmung, Belag, Attika und Attikablech, sobald das Obergeschoss zurückspringt.</span></li>
+        <li><span><b>Gefälledämmung.</b>Abläufe setzen, Skizzeo rechnet Kehlen und Grate, auch bei L- und U-förmigen Grundrissen.</span></li>
+        <li><span><b>Dachentwässerung.</b>Regenfallrohre mit Wasserfangkasten, Rohrschellen und Notentwässerung.</span></li>
+        <li><span><b>Vorsprung.</b>Die Decke verlängert sich, die Untersicht wird gedämmt und bekleidet.</span></li>
+        <li><span><b>Baustelle und Erdarbeiten.</b>Bauzaun, Baustrom, Baugrube und Abfuhr als eigene Titel im LV.</span></li>
+      </ul>
+    </div>
+    <div class="tag plain" data-anchor="deck" style="--stem:7.5rem"><div class="label">Dachterrasse · entsteht beim Rücksprung</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag plain" data-anchor="drain" style="--stem:4.5rem"><div class="label"><em>2 %</em> Gefälle · Kehlen und Grate</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag" data-anchor="pipe2" style="--stem:3.2rem"><div class="label"><em>Fallrohr</em> mit Wasserfangkasten</div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag plain down" data-anchor="base" style="--stem:3.4rem"><div class="label">Sohlplatte · Frostschürze · Geländeplatte</div><div class="stem"></div><div class="dot"></div></div>
+    <aside class="details glass rise" style="--d:3" aria-label="Details im Schnitt">
+      <h3>Im Schnitt <small>Zum Vergrößern antippen</small></h3>
+      <div class="thumbs">
+        <button type="button" data-zoom="assets/img/07-schnittdetail-dachterrasse.png" data-cap="Schnittdetail an der Dachterrasse: mehrschalige Wand, Attika und normgerechte Schraffuren." data-paper><img src="assets/img/07-schnittdetail-dachterrasse.png" alt="" loading="lazy"><span>Dachterrasse</span></button>
+        <button type="button" data-zoom="assets/img/23-schnitt-fusspunkt-schaumglas.png" data-cap="Fußpunkt auf der Dachterrasse: Der Verblender steht auf druckfesten Schaumglas-Dämmsteinen." data-paper><img src="assets/img/23-schnitt-fusspunkt-schaumglas.png" alt="" loading="lazy" style="object-position:70% 40%"><span>Fußpunkt</span></button>
+        <button type="button" data-zoom="assets/img/25-schnitt-gelaende-und-gruendung.png" data-cap="Gründung mit Geländelinie. Das Gebäude steht leicht über dem Gelände, die frostfreie Tiefe bleibt gewahrt." data-paper><img src="assets/img/25-schnitt-gelaende-und-gruendung.png" alt="" loading="lazy" style="object-position:45% 60%"><span>Gründung</span></button>
+        <button type="button" data-zoom="assets/img/37-schnittdetail-ausbau-innen.png" data-cap="Fußpunkt einer Innenwand: Estrich, Bodenbelag und Wandputz als eigene Schichten." data-paper><img src="assets/img/37-schnittdetail-ausbau-innen.png" alt="" loading="lazy" style="object-position:30% 60%"><span>Ausbau innen</span></button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- 06 · Programm 04: Mengen, Kosten, AVA -->
+  <section class="page p-auswertung" id="auswertung" data-nav="programm" data-chapter="4" data-title="Mengen · Kosten · AVA" data-scene="off" aria-labelledby="t-auswertung" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>04</b> Mengen · Kosten · AVA</p>
+      <h2 id="t-auswertung" class="rise" style="--d:1">Ein Klick.<span>Drei Karten.</span></h2>
+      <p class="lead rise" style="--d:2">„Mengen · Kosten · AVA“ öffnet ein zweites Fenster neben dem Modell oder auf dem zweiten Bildschirm. Modell und Liste sind in beide Richtungen gekoppelt.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Mengen nach VOB oder für die Bestellung.</b>Zu jeder Zahl lässt sich der Rechenweg aufklappen.</span></li>
+        <li><span><b>Kostenschätzung live.</b>Nach Gewerk, Geschoss oder Kostengruppe nach DIN 276, nur Material oder mit Lohn.</span></li>
+        <li><span><b>Leistungsverzeichnis je Los und Gewerk.</b>Als PDF, als Anfrage ohne Preise oder mit Preisen.</span></li>
+        <li><span><b>Bauteil und Position verknüpft.</b>Ein Bauteil wählen, und Kosten und LV zeigen nur seine Positionen.</span></li>
+        <li><span><b>Ihre Preise.</b>Werkseitig unverbindliche Referenzpreise, eigene Preise und Bauleistungen pflegen Sie in der Verwaltung.</span></li>
+      </ul>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img src="assets/img/26-kosten-dunkles-thema.png" width="776" height="661" data-tab="Kosten" data-cap="Kostenschätzung mit Baustelleneinrichtung, Erdarbeiten und Summen." alt="Fenster Mengen, Kosten und AVA im dunklen Thema, Karte Kosten mit Positionen nach Gewerk und Summen netto und brutto." loading="lazy">
+        <img src="assets/img/27-lv-dunkles-thema.png" width="776" height="562" data-tab="LV" data-cap="Leistungsverzeichnis. Die Positionen des gewählten Bauteils sind hervorgehoben." alt="Leistungsverzeichnis im dunklen Thema, Positionen des gewählten Bauteils sind farbig hervorgehoben." loading="lazy">
+        <img src="assets/img/28-mengen-mit-rechenweg-vob.png" width="1000" height="1000" data-tab="Mengen" data-cap="Mengenermittlung nach Gewerk mit Umschalter VOB oder Bestellung und aufgeklapptem Rechenweg je Wand." alt="Mengenermittlung mit Umschalter VOB und Bestellung, unter jeder Wand ist der Rechenweg aufgeklappt." loading="lazy">
+        <img src="assets/img/04-modell-und-mengen-gekoppelt.png" width="1600" height="1000" data-tab="Gekoppelt" data-cap="Modell links, Mengen rechts. Die angefahrene Wand leuchtet in beiden Fenstern." alt="Skizzeo mit zwei Fenstern: links das 3D-Modell, rechts die Mengenermittlung. Die Außenwand AW-003 ist in beiden hervorgehoben." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen"></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 07 · Programm 05: Sonne und Gelände -->
+  <section class="page p-sonne" id="sonne" data-nav="programm" data-chapter="5" data-title="Sonne und Gelände" data-scene="full" data-view="sonne" aria-labelledby="t-sonne" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>05</b> Sonne und Gelände</p>
+      <h2 id="t-sonne" class="rise" style="--d:1">Die Sonne<span>zum Anfassen.</span></h2>
+      <p class="lead rise" style="--d:2">Bauort und Nordpfeil setzen, Datum wählen, die Sonne über den Tag ziehen. Der Schatten wandert in 3D und in den Ansichten live mit. Probieren Sie es am Modell.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Ansichten nach Himmelsrichtung.</b>Aus Vorne und Hinten werden Südost- und Nordwestansicht.</span></li>
+        <li><span><b>Schatten in den Ansichten.</b>Als Fläche oder Schraffur, nach echtem Sonnenstand oder klassischem Zeichenlicht.</span></li>
+        <li><span><b>Geländeplatte.</b>In 3D mit Rasen, im Schnitt geschnitten, in den Ansichten als Band.</span></li>
+        <li><span><b>Echtes Gelände.</b>Lageplan als PDF und Höhenaufmaß des Vermessers einlesen. Gründung und Erdmengen folgen dem Gelände.</span></li>
+      </ul>
+    </div>
+    <div class="tag sun" data-anchor="sun" style="--stem:1.9rem"><div class="label"><em>☀</em> <span data-out="sunlabel">21.06. · 9:30 MESZ</span></div><div class="stem"></div><div class="dot"></div></div>
+    <div class="tag north" data-anchor="north"><div class="label">N</div><div class="stem"></div><div class="dot"></div></div>
+    <aside class="sunpanel glass rise" style="--d:3" aria-label="Sonnenstand einstellen">
+      <div class="live-head"><b style="font-weight:600;font-size:.95rem">Sonnenstand</b><span class="pulse">LIVE</span></div>
+      <div class="dates" role="group" aria-label="Datum wählen">
+        <button type="button" data-date="0" aria-pressed="false">21.03.</button><button type="button" data-date="1" aria-pressed="true">21.06.</button><button type="button" data-date="2" aria-pressed="false">23.09.</button><button type="button" data-date="3" aria-pressed="false">21.12.</button><button type="button" data-date="now" aria-pressed="false">Jetzt</button>
+      </div>
+      <div class="clock"><strong id="sun-clock">9:30<small>MESZ</small></strong><span id="sun-date">21. Juni</span></div>
+      <div class="slider">
+        <label class="sr" for="sun-range">Uhrzeit</label>
+        <input type="range" id="sun-range" min="300" max="1320" step="5" value="570">
+        <div class="ends"><span id="sun-rise">Aufgang –</span><span id="sun-set">Untergang –</span></div>
+      </div>
+      <div class="sunfacts">
+        <div><small>Sonnenhöhe</small><b id="sun-elev">–</b></div>
+        <div><small>Richtung</small><b id="sun-azim">–</b></div>
+      </div>
+      <p class="note">Vereinfachte Sonnenbahn für Norddeutschland, zur Veranschaulichung</p>
+    </aside>
+  </section>
+
+  <!-- 08 · Programm 06: IFC und Erweiterungen -->
+  <section class="page p-austausch" id="austausch" data-nav="programm" data-chapter="6" data-title="IFC und Erweiterungen" data-scene="off" aria-labelledby="t-austausch" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise"><b>06</b> IFC und Erweiterungen</p>
+      <h2 id="t-austausch" class="rise" style="--d:1">Offen für Fachplaner.<span>Erweiterbar mit Bauteilen.</span></h2>
+      <p class="lead rise" style="--d:2">Das Modell geht als IFC4 an Statik, Energieberatung, Haustechnik und AVA, mit Mengen je Bauteil, Kostengruppen nach DIN 276 sowie Fenster- und Türöffnungen.</p>
+      <ul class="points rise" style="--d:3">
+        <li><span><b>Eigene IFC-Vorschau.</b>Zeigt vorher, was andere Programme sehen: 3D-Bild, Gebäude, Geschosse und Bauteile.</span></li>
+        <li><span><b>Haus an seinem Ort.</b>Mit den Landeskoordinaten liegt das Gebäude im IFC an der richtigen Stelle und Höhe.</span></li>
+        <li><span><b>Erweiterungsbauteile.</b>Treppe, Geländer, Stütze oder Bodenplatte einlesen und aus dem Bauteilkatalog einfügen.</span></li>
+        <li><span><b>Volle BIM-Einbindung.</b>Erweiterungen erscheinen in allen Ansichten und laufen in Mengen, Kosten und LV mit.</span></li>
+      </ul>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img src="assets/img/29-ifc-vorschau.png" width="1400" height="860" data-tab="IFC-Vorschau" data-cap="Die eigene IFC-Vorschau: zwei Gebäude in 3D, gegliedert nach Gebäude und Geschoss, mit Klassen und Anzahl der Bauteile." alt="IFC-Vorschau mit zwei Gebäuden in 3D, links die Gliederung nach Gebäude und Geschoss, rechts die Bauteilklassen." loading="lazy">
+        <img src="assets/img/21-bauteilkatalog-erweiterungen.png" width="1100" height="740" data-tab="Katalog" data-cap="Bauteilkatalog mit dem Reiter Erweiterungen: eingelesene Bauteile nach Gruppen, bereit zum Einfügen." alt="Bauteilkatalog mit Reiter Erweiterungen, gewählt ist eine Bodenplatte mit Beschreibung und Knopf Einfügen." loading="lazy">
+        <img src="assets/img/22-erweiterungen-eigene-bedienfelder.png" width="1320" height="602" data-tab="Bedienfelder" data-cap="Geländer, Bodenplatte, Stütze und Treppe bringen eigene Felder mit und sehen aus wie jedes Skizzeo-Bauteil." alt="Fünf Eigenschaftenfelder nebeneinander für Geländer, Bodenplatte, Stütze, Treppe und ein zweites Geländer." loading="lazy">
+        <img src="assets/img/20-erweiterungsbauteile-in-3d.png" width="1600" height="1000" data-tab="Im Modell" data-cap="Eingelesene Erweiterungsbauteile am Haus. Testbild aus der Entwicklung." alt="Haus in 3D mit eingelesener Treppe, Geländer, Fundament und Stütze." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen"></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 09 · Für wen -->
+  <section class="page p-wer" id="fuer-wen" data-nav="fuer-wen" data-title="Für wen" data-scene="dim" data-view="wer" aria-labelledby="t-wer" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise">Für wen</p>
+      <h2 id="t-wer" class="rise" style="--d:1">Für Praktiker,<span>nicht für CAD-Spezialisten.</span></h2>
+      <p class="lead rise" style="--d:2">Für alle, die Wohnhäuser planen, bauen oder verkaufen und schnell und richtig zu einem Modell mit Mengen und Kosten kommen wollen.</p>
+    </div>
+    <ul class="people">
+      <li class="glass rise" style="--d:2"><span class="nr">01</span><h3>Architekten</h3><p>Entwerfen direkt in 3D, Bauzeichnungen nach deutscher Norm und ein Kostenrahmen aus demselben Modell.</p></li>
+      <li class="glass rise" style="--d:3"><span class="nr">02</span><h3>Bauunternehmer</h3><p>Ein Haus im Kundengespräch modellieren, Mengen und Kosten sofort sehen, Leistungsverzeichnisse je Gewerk für Nachunternehmer.</p></li>
+      <li class="glass rise" style="--d:4"><span class="nr">03</span><h3>Bauingenieure</h3><p>Prüfbare Mengen je Bauteil, Geschoss und Gewerk, mit Rechenweg und Wandaufbauten aus dem Bauteilkatalog.</p></li>
+      <li class="glass rise" style="--d:5"><span class="nr">04</span><h3>Bauträger</h3><p>Auch Fertig- und Massivhausanbieter: Wandtypen, Baustoffe und Preise einmal anlegen und in jedem Projekt nutzen.</p></li>
+      <li class="glass rise" style="--d:6"><span class="nr">05</span><h3>Immobilienmakler</h3><p>Ein anschauliches 3D-Modell und eine erste Kostenschätzung für das Gespräch mit Interessenten, ohne CAD-Kenntnisse.</p></li>
+    </ul>
+  </section>
+
+  <!-- 10 · Werkbank (Ausblick) -->
+  <section class="page p-werkbank" id="werkbank" data-nav="werkbank" data-title="Bauteil-Werkbank" data-scene="off" aria-labelledby="t-werkbank" tabindex="-1">
+    <div class="text">
+      <nav class="subnav rise" aria-label="Werkbank"><a href="#werkbank" aria-current="page">Bauteil-Werkbank</a><a href="#verwaltung">Verwaltung</a></nav>
+      <p class="rise" style="--d:1;margin:0 0 1.4rem"><span class="badge">Ausblick</span></p>
+      <h2 id="t-werkbank" class="rise" style="--d:1">Eigene Bauteile.<span>Ohne Programmieren.</span></h2>
+      <p class="lead rise" style="--d:2">Mit der Bauteil-Werkbank sollen Firmen eigene Bauteile anlegen können: im ganz normalen KI-Chat beschreiben, in der Vorschau wachsen sehen und als Bauteildatei in Skizzeo übernehmen.</p>
+      <div class="chat rise" style="--d:3" aria-label="Beispiel für eine Beschreibung im KI-Chat">
+        <p class="bubble me"><span class="who">Ihre Beschreibung</span>Bitte eine Stahlbetonstütze 24/24 cm, Fuß auf der Rohdecke, Kopf unter der Decke. Dazu die Typen 30/30 und 24/40.</p>
+        <p class="bubble"><span class="who">Werkbank</span>Die Stütze steht in der Vorschau. Beton, Schalung und Betonstahl werden mitgezählt, die Richtpreise sind als grob markiert.</p>
+      </div>
+      <p class="aside-note rise" style="--d:4">Heute schon gebaut: Skizzeo liest solche Bauteile ein und fügt sie mit Mengen, Kosten und LV ins Modell. Mehr unter <a href="#austausch">IFC und Erweiterungen</a>.</p>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img src="assets/img/werkbank.png" width="1635" height="1302" data-tab="Werkbank" data-cap="Prototyp der Werkbank mit einer Stahlbetonstütze. Die Chat-Texte sind zur Veranschaulichung formuliert." alt="Prototyp der Bauteil-Werkbank: eine Stahlbetonstütze in der 3D-Vorschau, daneben Prüfung, Mengenermittlung und Kosten als Richtwert." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen" hidden></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 11 · Verwaltung -->
+  <section class="page p-verwaltung" id="verwaltung" data-nav="werkbank" data-title="Verwaltung" data-scene="off" aria-labelledby="t-verwaltung" tabindex="-1">
+    <div class="text">
+      <nav class="subnav rise" aria-label="Werkbank"><a href="#werkbank">Bauteil-Werkbank</a><a href="#verwaltung" aria-current="page">Verwaltung</a></nav>
+      <p class="rise" style="--d:1;margin:0 0 1.4rem"><span class="badge now">Heute</span></p>
+      <h2 id="t-verwaltung" class="rise" style="--d:1">Planen<span>statt verwalten.</span></h2>
+      <p class="lead rise" style="--d:2">Baustoffe, Preise und Bauleistungen pflegt eine geführte Verwaltung mit Entwurf, Vorschau und Freigabe. Wandtypen, Baustoffe und Maßstil legen Sie einmal als Firmenstandard an und nutzen sie in jedem Projekt.</p>
+      <div class="outlook rise" style="--d:3">
+        <span class="badge">Ausblick</span>
+        <p>Als Nächstes soll eine KI diese Arbeit übernehmen. Sie recherchiert neue Bauteile, Preise und Leistungstexte und legt sie sauber an, mit geführter To-do-Liste. Eine Schulung für die Verwaltung soll es dann nicht mehr brauchen.</p>
+      </div>
+    </div>
+    <figure class="viewer rise" style="--d:2" data-viewer>
+      <div class="frame">
+        <img src="assets/img/14-verwaltung-gefuehrter-ablauf.png" width="840" height="560" data-tab="Geführter Ablauf" data-cap="Ein Händlerpreis aus einem Angebot wird in drei geführten Schritten eingetragen." alt="Geführter Dialog Händlerpreis für dieses Haus eintragen, im zweiten von drei Schritten." loading="lazy">
+        <img src="assets/img/09-bauteilkatalog-wandaufbau.png" width="1280" height="800" data-tab="Bauteilkatalog" data-cap="Wandtypen mit Schichten, Dicken und Vorschau, auch als Firmenkatalog für alle Projekte." alt="Bauteilkatalog mit einem Wandtyp, seinen Schichten von außen nach innen, Dicken und einer Vorschau." loading="lazy">
+        <img src="assets/img/10-baustoff-darstellung.png" width="880" height="640" data-tab="Baustoffe" data-cap="Oberflächen mit Steinformat, Verband und Vorschau, etwa für einen Verblender." alt="Einstellungen der Oberflächen: Verblender mit Steinformat, Verband und Vorschau." loading="lazy">
+        <img src="assets/img/35-einstellungen-bemassung.png" width="880" height="640" data-tab="Maßstil" data-cap="Linien, Begrenzung, Schrift und Ketten einmal einstellen und als Firmenstandard speichern." alt="Einstellungen der Bemaßung mit Maßlinie, Begrenzung, Schrift und den Schaltern für die Außenmaßketten." loading="lazy">
+      </div>
+      <figcaption><p class="cap"></p><div class="tabs" role="tablist" aria-label="Bild wählen"></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- 12 · Kontakt -->
+  <section class="page p-kontakt" id="kontakt" data-nav="kontakt" data-title="Kontakt" data-scene="dim" data-view="kontakt" aria-labelledby="t-kontakt" tabindex="-1">
+    <div class="text">
+      <p class="eyebrow rise">Kontakt</p>
+      <h2 id="t-kontakt" class="rise" style="--d:1">Skizzeo<span>erscheint bald.</span></h2>
+      <p class="lead rise" style="--d:2">Sie möchten früh dabei sein oder haben Fragen und Anregungen aus der Praxis? Schreiben Sie uns.</p>
+      <p class="rise" style="--d:3;margin:0"><a class="mail" href="mailto:info@skizzeo.com">info@skizzeo.com</a></p>
+    </div>
+    <ul class="facts" aria-label="Eckdaten">
+      <li class="glass rise" style="--d:2"><h3>Für Windows</h3><p>Als eigenständiges Programm auf Ihrem Rechner.</p></li>
+      <li class="glass rise" style="--d:3"><h3>Ohne Internet</h3><p>Skizzeo läuft vollständig lokal und braucht keine Verbindung.</p></li>
+      <li class="glass rise" style="--d:4"><h3>Eigenständig entwickelt</h3><p>Eigener Geometriekern und eigene Oberfläche. Schnell und schlank.</p></li>
+      <li class="glass rise" style="--d:5"><h3>Sicher gespeichert</h3><p>Jeder Schritt lässt sich zurücknehmen. Gesichert wird automatisch alle fünf Minuten.</p></li>
+    </ul>
+  </section>
+
+  <!-- Rechtliches, außerhalb der Seitenfolge -->
+  <section class="page p-recht" id="impressum" data-aside data-title="Impressum" data-scene="off" aria-labelledby="t-impressum" tabindex="-1">
+    <div class="legal glass">
+      <p class="eyebrow">Rechtliches</p>
+      <h2 id="t-impressum">Impressum</h2>
+      <div class="cols">
+        <div><h3>Angaben gemäß § 5 DDG</h3><p>Dipl.-Ing. (FH) Jörn Horstmann<br>Denkmalsweg 18b<br>27777 Ganderkesee<br>Deutschland</p></div>
+        <div><h3>Kontakt</h3><p>E-Mail: <a href="mailto:info@skizzeo.com">info@skizzeo.com</a></p></div>
+        <div><h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>Dipl.-Ing. (FH) Jörn Horstmann, Anschrift wie oben.</p></div>
+        <div><h3>Haftung für Inhalte</h3><p>Die Inhalte dieser Seiten wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Skizzeo befindet sich in Entwicklung. Beschriebene Funktionen und Bilder zeigen einen Entwicklungsstand und können sich ändern.</p></div>
+        <div><h3>Haftung für Links</h3><p>Diese Website enthält keine Links zu externen Websites Dritter. Sollte sich das ändern, gilt: Für die Inhalte verlinkter Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p></div>
+        <div><h3>Urheberrecht</h3><p>Texte, Bilder, Grafiken und das Logo auf dieser Website sind urheberrechtlich geschützt. Eine Verwendung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page p-recht" id="datenschutz" data-aside data-title="Datenschutz" data-scene="off" aria-labelledby="t-datenschutz" tabindex="-1">
+    <div class="legal glass">
+      <p class="eyebrow">Rechtliches</p>
+      <h2 id="t-datenschutz">Datenschutz</h2>
+      <p class="draft-note">Entwurf. Vor der Veröffentlichung bitte prüfen, insbesondere die Angaben zum Hosting. Stellen in Gelb sind noch offen.</p>
+      <div class="cols">
+        <div><h3>Verantwortlicher</h3><p>Dipl.-Ing. (FH) Jörn Horstmann, Denkmalsweg 18b, 27777 Ganderkesee, E-Mail: <a href="mailto:info@skizzeo.com">info@skizzeo.com</a></p></div>
+        <div><h3>Grundsatz</h3><p>Diese Website ist ein reines Informationsangebot. Sie setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und bindet keine Inhalte fremder Anbieter ein. Schriften, Bilder und das 3D-Modell werden vom eigenen Server geladen.</p></div>
+        <div><h3>Server-Logdateien</h3><p>Beim Aufruf der Website verarbeitet der Hosting-Anbieter technisch notwendige Daten, die Ihr Browser übermittelt: IP-Adresse, Datum und Uhrzeit des Abrufs, aufgerufene Seite, Browsertyp und Betriebssystem sowie die zuvor besuchte Seite. Diese Daten dienen der sicheren und stabilen Bereitstellung der Website. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Die Logdateien werden nach <span class="todo">[Speicherdauer beim Hoster erfragen]</span> gelöscht.</p><p>Hosting-Anbieter: <span class="todo">[Name und Anschrift des Hosters]</span>. Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO <span class="todo">[prüfen]</span>.</p></div>
+        <div><h3>Kontakt per E-Mail</h3><p>Wenn Sie uns per E-Mail schreiben, verarbeiten wir Ihre Angaben, um Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b oder f DSGVO. Die Daten werden gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p></div>
+        <div><h3>Ihre Rechte</h3><p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten, auf Datenübertragbarkeit sowie auf Widerspruch gegen die Verarbeitung. Wenden Sie sich dazu an die oben genannte Adresse.</p><p>Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für den Datenschutz Niedersachsen.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot" id="foot">
+  <ol class="chapters" aria-label="Kapitel Programm">
+    <li><a href="#modell"><i></i><span>01</span><b>Modellieren in 3D</b></a></li>
+    <li><a href="#zeichnen"><i></i><span>02</span><b>Zeichnen mit Maßen</b></a></li>
+    <li><a href="#bauplaner"><i></i><span>03</span><b>Denkt wie ein Bauplaner</b></a></li>
+    <li><a href="#auswertung"><i></i><span>04</span><b>Mengen · Kosten · AVA</b></a></li>
+    <li><a href="#sonne"><i></i><span>05</span><b>Sonne und Gelände</b></a></li>
+    <li><a href="#austausch"><i></i><span>06</span><b>IFC und Erweiterungen</b></a></li>
+  </ol>
+  <p class="legal-links"><span>© <span data-year>2026</span> Skizzeo</span><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></p>
+  <div class="pager">
+    <p class="count"><b id="count-nr">01</b> / <span id="count-all">12</span><em id="count-title">Start</em></p>
+    <button type="button" id="prev" aria-label="Vorherige Seite">←</button>
+    <button type="button" id="next" aria-label="Nächste Seite">→</button>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Großansicht" hidden>
+  <button type="button" class="close" id="lb-close" aria-label="Schließen">✕</button>
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+</div>
+
+<script src="assets/js/haus3d.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
